@@ -34,3 +34,31 @@ const validator = new Validator(data, schema)
 // check for errors
 console.log(validator.errors)
 ```
+
+#### Custom rules
+Create a custom rule with the `Validator.Rule` class.
+```js
+const rule = new Validator.Rule({
+  name: 'my-rule',
+  validate: value => {
+    // Do something to validate the value
+    // return true if valid and false if not
+  }
+})
+
+const schema = {
+  name: rule
+}
+```
+
+#### Rules
+The validator exposes some rules for easier schema creation.
+```js
+const { string, number, array, boolean, object } = Validator
+
+const Schema = {
+  name: string({ required: true, min: 3, max: 40 }),
+  age: number({ required: true }),
+  skills: array({ min: 0, max: 10 })
+}
+```
