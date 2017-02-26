@@ -16,6 +16,7 @@ describe('Validator.constructor', () => {
     const data = {
       name: 'Frederik',
       age: 23,
+      boolean: 'false',
       properties: {
         somekey: new Date()
       }
@@ -24,12 +25,15 @@ describe('Validator.constructor', () => {
     const schema = {
       name: String,
       age: Number,
+      boolean: Boolean,
       properties: {
         somekey: Date
       }
     }
 
     const validator = new Validator(data, schema)
-    expect(validator.errors).to.be.deep.equal({})
+    expect(validator.errors).to.be.deep.equal({
+      boolean: 'false is not a valid input'
+    })
   })
 })
