@@ -1,6 +1,6 @@
 {
   "name": "specla-validator",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "homepage": "https://github.com/Specla/Validator#readme",
   "description": "Validate schemas and types",
   "main": "./lib/Validator.js",
@@ -37,8 +37,7 @@
   "man": "",
   "author": "Frederik Kvartborg Albertsen",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
