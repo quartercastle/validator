@@ -1,0 +1,49 @@
+{
+  "name": "specla-validator",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Specla/Validator#readme",
+  "description": "Validate schemas and types",
+  "main": "./lib/Validator.js",
+  "scripts": {
+    "test": "npm run lint && ./node_modules/.bin/mocha --recursive test/*",
+    "test:watch": "./node_modules/.bin/mocha --watch",
+    "lint": "./node_modules/.bin/standard | ./node_modules/.bin/snazzy",
+    "lint:fix": "./node_modules/.bin/standard --fix | ./node_modules/.bin/snazzy"
+  },
+  "tags": [
+    "specla",
+    "mvc",
+    "web-framework",
+    "express",
+    "rest",
+    "api",
+    "validator"
+  ],
+  "files": [
+    "lib",
+    "LICENSE",
+    "Readme.md"
+  ],
+  "engines": {
+    "node": ">=6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Specla/Validator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Specla/Validator/issues"
+  },
+  "man": "",
+  "author": "Frederik Kvartborg Albertsen",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2",
+    "pre-commit": "^1.2.2",
+    "snazzy": "^6.0.0",
+    "standard": "^8.5.0"
+  }
+}
