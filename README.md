@@ -58,7 +58,7 @@ const { string, number, array, boolean, object } = Validator
 
 const Schema = {
   name: string({ required: true, min: 3, max: 40 }),
-  age: number({ required: true }),
+  age: number({ required: true, min: 0 }),
   skills: array({ min: 0, max: 10 })
 }
 ```
