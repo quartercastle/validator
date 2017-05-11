@@ -7,5 +7,6 @@ module.exports = {
   nan: [NaN],
   object: [{}],
   array: [[]],
-  function: [() => {}]
+  function: [() => {}],
+  symbol: [Symbol('test')]
 }

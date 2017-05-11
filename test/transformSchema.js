@@ -12,7 +12,8 @@ describe('Transform schema', () => {
       boolean: Boolean,
       object: Object,
       array: Array,
-      function: Function
+      function: Function,
+      symbol: Symbol
     }
 
     for (let instance in instances) {
