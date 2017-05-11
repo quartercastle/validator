@@ -1,4 +1,4 @@
-# Pretty schema
+# Specla Validator
 There is already a lot of schema validation libraries for the JavaScript community,
 but i have never really found one that i like. There is always to much boilerplate
 involved with defining the schemas and it just makes a lot of noise in the codebase.
