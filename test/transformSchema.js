@@ -22,11 +22,11 @@ describe('Transform schema', () => {
       assertValidator(instance, transformedschema[instance])
     }
 
-    const { date }  = transformSchema({
+    const { date } = transformSchema({
       date: Date
     })
 
-    expect(date(new Date)).to.be.true
+    expect(date(new Date())).to.be.true
 
     for (let type of ['string', 10, true, null, undefined, NaN, [], {}]) {
       expect(date(type)).to.be.false
