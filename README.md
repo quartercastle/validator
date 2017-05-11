@@ -17,8 +17,8 @@ const schema = {
 
 ```js
 const schema = {
-  name: string({ required, max: 40 }),
-  email: email({ required }),
+  name: string({ required: true, max: 40 }),
+  email: email({ required: true }),
   age: value => value === 23,
   skills: [{
     type: String,
