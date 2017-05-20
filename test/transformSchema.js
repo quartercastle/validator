@@ -2,25 +2,24 @@
 
 const { expect } = require('chai')
 const transformSchema = require('../lib/transformSchema')
-const assertValidator = require('./utils/assertValidator')
+const rules = require('../rules')
 
 describe('Transform schema', () => {
   it('Should transform schema rules to validator functions', () => {
-    const instances = {
+    const schema = {
       string: String,
       number: Number,
       boolean: Boolean,
-      object: Object,
       array: Array,
-      function: Function,
+      object: Object,
       symbol: Symbol
     }
 
-    for (let instance in instances) {
-      const schema = {}
-      schema[instance] = instances[instance]
-      const transformedschema = transformSchema(schema)
-      assertValidator(instance, transformedschema[instance])
+    const transformedSchema = transformSchema(schema)
+
+    for (const key in transformedSchema) {
+      expect(transformedSchema[key].toString())
+        .to.be.equal(rules[key]().toString())
     }
   })
 
