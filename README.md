@@ -1,4 +1,4 @@
-# Specla Validator
+# WIP: v2.0.0 Specla Validator
 
 [![npm version](https://img.shields.io/npm/v/specla-validator.svg)](https://www.npmjs.com/package/specla-validator)
 [![Build Status](https://travis-ci.org/Specla/Validator.svg?branch=master)](https://travis-ci.org/Specla/Validator)
@@ -12,6 +12,31 @@ involved with defining the schemas and it just makes a lot of noise in the codeb
 I want something intuitive, maintainable and extensible. Thats what i try to accomplish
 with `specla-validator`.
 
+## install
+```sh
+npm install --save @specla/validator
+```
+
+## Usage
+```js
+const schema = {
+  name: String,
+  createdAt: Date
+}
+
+const data = {
+  name: 'John Doe',
+  createdAt: new Date()
+}
+
+const validator = new Validator(data, schema)
+
+if (validator.fails) {
+  console.log(validator.errors)
+} else {
+  console.log('Looks good!')
+}
+```
 
 # The Schema
 ```js
@@ -58,7 +83,7 @@ const schema = {
 In many cases it would be nice if we could give our rule some dynamic properties,
 a property could be if the value is required or a min/max length of the value.
 A greate way to solve this problem is to wrap the rule definition into a function
-which accepts some properties.
+which accepts some properties. We can then return our configured validator function.
 ```js
 
 function string ({ required, min, max }) {
