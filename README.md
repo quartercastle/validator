@@ -14,8 +14,6 @@ with `specla-validator`.
 
 
 # The Schema
-The definition of a schema in this package the key is the field to validate and the
-value is the how the field should be validated.
 ```js
 const schema = {
   field: function validatorFunction (value) {}
@@ -35,13 +33,6 @@ const schema = {
   updatedAt: Date
 }
 ```
-
-### Validator
-Static functions
- - registerRule()
-Events
- - On error
-
 ### Schema rules
 Rules are basically just pure functions and is refered to as `validator functions`
 in this project. A validator function takes a single argument which is the
