@@ -31,7 +31,7 @@ const data = {
 
 const validator = new Validator(data, schema)
 
-if (validator.fails) {
+if (validator.fails()) {
   console.log(validator.errors)
 } else {
   console.log('Looks good!')
