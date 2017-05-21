@@ -10,7 +10,7 @@ describe('Rule: boolean', () => {
     const validator = boolean()
     for (const key in types) {
       if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true
+        expect(validator(types[key])).to.be.true // eslint-disable-line
         continue
       }
 
@@ -21,7 +21,7 @@ describe('Rule: boolean', () => {
   it('Should be required', () => {
     const validator = boolean({ required: true })
 
-    expect(validator(false)).to.be.true
+    expect(validator(false)).to.be.true // eslint-disable-line
     expect(() => validator(undefined)).to.throw('is required')
     expect(() => validator(null)).to.throw('is required')
   })

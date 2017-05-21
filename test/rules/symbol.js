@@ -10,7 +10,7 @@ describe('Rule: symbol', () => {
     const validator = symbol()
     for (const key in types) {
       if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true
+        expect(validator(types[key])).to.be.true // eslint-disable-line
         continue
       }
 
@@ -21,7 +21,7 @@ describe('Rule: symbol', () => {
   it('Should be required', () => {
     const validator = symbol({ required: true })
 
-    expect(validator(Symbol('test'))).to.be.true
+    expect(validator(Symbol('test'))).to.be.true // eslint-disable-line
     expect(() => validator(undefined)).to.throw('is required')
     expect(() => validator(null)).to.throw('is required')
   })

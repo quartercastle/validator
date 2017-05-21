@@ -10,7 +10,7 @@ describe('Rule: string', () => {
     const validator = string()
     for (const key in types) {
       if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true
+        expect(validator(types[key])).to.be.true // eslint-disable-line
         continue
       }
 
@@ -21,7 +21,7 @@ describe('Rule: string', () => {
   it('Should be required', () => {
     const validator = string({ required: true })
 
-    expect(validator('string')).to.be.true
+    expect(validator('string')).to.be.true // eslint-disable-line
     expect(() => validator('')).to.throw('is required')
     expect(() => validator(undefined)).to.throw('is required')
     expect(() => validator(null)).to.throw('is required')
@@ -30,16 +30,16 @@ describe('Rule: string', () => {
   it('Should above minimum length', () => {
     const validator = string({ min: 2 })
 
-    expect(validator('st')).to.be.true
-    expect(validator('str')).to.be.true
+    expect(validator('st')).to.be.true // eslint-disable-line
+    expect(validator('str')).to.be.true // eslint-disable-line
     expect(() => validator('')).to.throw('is below the minimum length')
   })
 
   it('Should below maximum length', () => {
     const validator = string({ max: 3 })
 
-    expect(validator('str')).to.be.true
-    expect(validator('st')).to.be.true
+    expect(validator('str')).to.be.true // eslint-disable-line
+    expect(validator('st')).to.be.true // eslint-disable-line
     expect(() => validator('string')).to.throw('is above the maximum length')
   })
 })

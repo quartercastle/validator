@@ -28,7 +28,7 @@ describe('Transform schema', () => {
       date: Date
     })
 
-    expect(date(new Date())).to.be.true
+    expect(date(new Date())).to.be.true // eslint-disable-line
 
     for (let type of ['string', 10, true, null, undefined, NaN, [], {}]) {
       expect(() => date(type)).to.throw(Error)

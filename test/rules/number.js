@@ -10,7 +10,7 @@ describe('Rule: number', () => {
     const validator = number()
     for (const key in types) {
       if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true
+        expect(validator(types[key])).to.be.true // eslint-disable-line
         continue
       }
 
@@ -21,7 +21,7 @@ describe('Rule: number', () => {
   it('Should be required', () => {
     const validator = number({ required: true })
 
-    expect(validator(436)).to.be.true
+    expect(validator(436)).to.be.true // eslint-disable-line
     expect(() => validator(undefined)).to.throw('is required')
     expect(() => validator(null)).to.throw('is required')
   })
@@ -29,16 +29,16 @@ describe('Rule: number', () => {
   it('Should above minimum length', () => {
     const validator = number({ min: 2 })
 
-    expect(validator(2)).to.be.true
-    expect(validator(3)).to.be.true
+    expect(validator(2)).to.be.true // eslint-disable-line
+    expect(validator(3)).to.be.true // eslint-disable-line
     expect(() => validator(1)).to.throw('is below the minimum')
   })
 
   it('Should below maximum length', () => {
     const validator = number({ max: 3 })
 
-    expect(validator(2)).to.be.true
-    expect(validator(3)).to.be.true
+    expect(validator(2)).to.be.true // eslint-disable-line
+    expect(validator(3)).to.be.true // eslint-disable-line
     expect(() => validator(4)).to.throw('is above the maximum')
   })
 })

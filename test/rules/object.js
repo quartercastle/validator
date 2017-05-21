@@ -11,7 +11,7 @@ describe('Rule: object', () => {
     const validator = object()
     for (const key in types) {
       if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true
+        expect(validator(types[key])).to.be.true // eslint-disable-line
         continue
       }
 
@@ -22,7 +22,7 @@ describe('Rule: object', () => {
   it('Should be required', () => {
     const validator = object({ required: true })
 
-    expect(validator({})).to.be.true
+    expect(validator({})).to.be.true // eslint-disable-line
     expect(() => validator(undefined)).to.throw('is required')
     expect(() => validator(null)).to.throw('is required')
   })
