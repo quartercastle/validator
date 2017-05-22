@@ -2,6 +2,7 @@
 
 const { expect } = require('chai')
 const { string } = require('../../rules')
+const { Value } = require('../../lib/exceptions')
 const types = require('../utils/types')
 const acceptedTypes = ['undefined', 'null', 'string']
 
@@ -25,6 +26,21 @@ describe('Rule: string', () => {
     expect(() => validator('')).to.throw('is required')
     expect(() => validator(undefined)).to.throw('is required')
     expect(() => validator(null)).to.throw('is required')
+  })
+
+  it('Should set a default value', () => {
+    const validator = string({ defaultValue: 'testing' })
+
+    try {
+      validator()
+    } catch (err) {
+      expect(err.value).to.be.equal('testing')
+    }
+
+    expect(validator('should work')).to.be.true // eslint-disable-line
+    expect(() => validator('')).to.throw(Value)
+    expect(() => validator(undefined)).to.throw(Value)
+    expect(() => validator(null)).to.throw(Value)
   })
 
   it('Should above minimum length', () => {

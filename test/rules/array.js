@@ -2,7 +2,7 @@
 
 const { expect } = require('chai')
 const { array } = require('../../rules')
-const { Schema } = require('../../lib/errors')
+const { Schema } = require('../../lib/exceptions')
 const types = require('../utils/types')
 const acceptedTypes = ['undefined', 'null', 'array']
 
