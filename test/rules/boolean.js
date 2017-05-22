@@ -1,28 +1,19 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const { boolean } = require('../../rules')
+const { boolean } = require('../../lib/rules')
 const types = require('../utils/types')
-const acceptedTypes = ['undefined', 'null', 'boolean']
 
 describe('Rule: boolean', () => {
-  it('Should validate type', () => {
-    const validator = boolean()
+  it('Should accept booleans', () => {
+    const validator = boolean({ optional: true })
+
     for (const key in types) {
-      if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true // eslint-disable-line
-        continue
+      if (['boolean', 'undefined', 'null'].includes(key)) {
+        expect(validator(types[key])).to.be.equal(true)
+      } else {
+        expect(() => validator(types[key])).to.throw(`isn't a boolean`)
       }
-
-      expect(() => validator(types[key])).to.throw(`isn't a boolean`)
     }
-  })
-
-  it('Should be required', () => {
-    const validator = boolean({ required: true })
-
-    expect(validator(false)).to.be.true // eslint-disable-line
-    expect(() => validator(undefined)).to.throw('is required')
-    expect(() => validator(null)).to.throw('is required')
   })
 })

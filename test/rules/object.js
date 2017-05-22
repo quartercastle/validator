@@ -1,34 +1,32 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const { object } = require('../../rules')
-const { Schema } = require('../../lib/exceptions')
+const { object } = require('../../lib/rules')
+const Schema = require('../../lib/exceptions/Schema')
 const types = require('../utils/types')
-const acceptedTypes = ['undefined', 'null', 'object']
 
 describe('Rule: object', () => {
-  it('Should validate type', () => {
-    const validator = object()
-    for (const key in types) {
-      if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true // eslint-disable-line
-        continue
-      }
+  it('Should accept objects', () => {
+    const validator = object({ optional: true })
 
-      expect(() => validator(types[key])).to.throw(`isn't an object`)
+    for (const key in types) {
+      if (['object', 'undefined', 'null'].includes(key)) {
+        expect(validator(types[key])).to.be.equal(true)
+      } else {
+        expect(() => validator(types[key])).to.throw(`isn't an object`)
+      }
     }
   })
 
-  it('Should be required', () => {
-    const validator = object({ required: true })
+  it('Should accept a schema as second argument', () => {
+    const schema = { field: 'rule' }
+    const validator = object({}, schema)
+    expect(() => validator({})).to.throw(Schema)
 
-    expect(validator({})).to.be.true // eslint-disable-line
-    expect(() => validator(undefined)).to.throw('is required')
-    expect(() => validator(null)).to.throw('is required')
-  })
-
-  it('Should accept a schema', () => {
-    const validator = object({}, { name: String })
-    expect(() => validator({ name: 'test' })).to.throw(Schema)
+    try {
+      validator({})
+    } catch (err) {
+      expect(err.schema).to.be.deep.equal(schema)
+    }
   })
 })

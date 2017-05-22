@@ -1,28 +1,19 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const { symbol } = require('../../rules')
+const { symbol } = require('../../lib/rules')
 const types = require('../utils/types')
-const acceptedTypes = ['undefined', 'null', 'symbol']
 
 describe('Rule: symbol', () => {
-  it('Should validate type', () => {
-    const validator = symbol()
+  it('Should accept symbols', () => {
+    const validator = symbol({ optional: true })
+
     for (const key in types) {
-      if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true // eslint-disable-line
-        continue
+      if (['symbol', 'undefined', 'null'].includes(key)) {
+        expect(validator(types[key])).to.be.equal(true)
+      } else {
+        expect(() => validator(types[key])).to.throw(`isn't a symbol`)
       }
-
-      expect(() => validator(types[key])).to.throw(`isn't a symbol`)
     }
-  })
-
-  it('Should be required', () => {
-    const validator = symbol({ required: true })
-
-    expect(validator(Symbol('test'))).to.be.true // eslint-disable-line
-    expect(() => validator(undefined)).to.throw('is required')
-    expect(() => validator(null)).to.throw('is required')
   })
 })

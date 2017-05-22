@@ -1,50 +1,46 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const { array } = require('../../rules')
-const { Schema } = require('../../lib/exceptions')
+const { array } = require('../../lib/rules')
+const Schema = require('../../lib/exceptions/Schema')
 const types = require('../utils/types')
-const acceptedTypes = ['undefined', 'null', 'array']
 
 describe('Rule: array', () => {
-  it('Should validate a type', () => {
-    const validator = array()
-    for (const key in types) {
-      if (acceptedTypes.includes(key)) {
-        expect(validator(types[key])).to.be.true // eslint-disable-line
-        continue
-      }
+  it('Should accept arrays', () => {
+    const validator = array({ optional: true })
 
-      expect(() => validator(types[key])).to.throw(`isn't an array`)
+    for (const key in types) {
+      if (['array', 'undefined', 'null'].includes(key)) {
+        expect(validator(types[key])).to.be.equal(true)
+      } else {
+        expect(() => validator(types[key])).to.throw(`isn't an array`)
+      }
     }
   })
 
-  it('Should be required', () => {
-    const validator = array({ required: true })
-
-    expect(validator([])).to.be.true // eslint-disable-line
-    expect(() => validator(undefined)).to.throw('is required')
-    expect(() => validator(null)).to.throw('is required')
-  })
-
-  it('Should above minimum length', () => {
+  it('Should be able to specify min length', () => {
     const validator = array({ min: 2 })
-
-    expect(validator([1, 2])).to.be.true // eslint-disable-line
-    expect(validator([1, 2, 3])).to.be.true // eslint-disable-line
-    expect(() => validator([1])).to.throw('is below the minimum')
+    expect(validator([1, 2])).to.be.equal(true)
+    expect(validator([1, 2, 3])).to.be.equal(true)
+    expect(() => validator([1])).to.be.throw('is below the minimum length')
   })
 
-  it('Should below maximum length', () => {
-    const validator = array({ max: 3 })
-
-    expect(validator([1, 2])).to.be.true // eslint-disable-line
-    expect(validator([1, 2, 3])).to.be.true // eslint-disable-line
-    expect(() => validator([1, 2, 3, 4])).to.throw('is above the maximum')
+  it('Should be able to specify max length', () => {
+    const validator = array({ max: 2 })
+    expect(validator([1])).to.be.equal(true)
+    expect(validator([1, 2])).to.be.equal(true)
+    expect(() => validator([1, 2, 3])).to.be.throw('is above the maximum length')
   })
 
-  it('Should accept a schema', () => {
-    const validator = array({}, [String])
-    expect(() => validator(['test'])).to.throw(Schema)
+  it('Should accept a schema as second argument', () => {
+    const schema = [{ field: 'rule' }]
+    const validator = array([], schema)
+    expect(() => validator([])).to.throw(Schema)
+
+    try {
+      validator([])
+    } catch (err) {
+      expect(err.schema).to.be.deep.equal(schema)
+    }
   })
 })
