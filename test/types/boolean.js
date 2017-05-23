@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const { boolean } = require('../../lib/rules')
+const { boolean } = require('../../lib/types')
 const types = require('../utils/types')
 
 describe('Rule: boolean', () => {

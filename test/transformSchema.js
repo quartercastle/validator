@@ -1,12 +1,12 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const transformSchema = require('../lib/transformSchema')
-const rules = require('../rules')
+const transformType = require('../lib/transformType')
+const rules = require('../types')
 
-describe('Transform schema', () => {
-  it('Should transform schema rules to validator functions', () => {
-    const schema = {
+describe('Transform type', () => {
+  it('Should transform type to validator functions', () => {
+    const type = {
       string: String,
       number: Number,
       boolean: Boolean,
@@ -15,16 +15,16 @@ describe('Transform schema', () => {
       symbol: Symbol
     }
 
-    const transformedSchema = transformSchema(schema)
+    const transformedtype = transformType(type)
 
-    for (const key in transformedSchema) {
-      expect(transformedSchema[key].toString())
+    for (const key in transformedtype) {
+      expect(transformedtype[key].toString())
         .to.be.equal(rules[key]().toString())
     }
   })
 
-  it('Should fallback to instanceof if no rules apply', () => {
-    const { date } = transformSchema({
+  it('Should fallback to instanceof if no types apply', () => {
+    const { date } = transformType({
       date: Date
     })
 
@@ -36,7 +36,7 @@ describe('Transform schema', () => {
   })
 
   it('Should be able to parse nested arrays and objects', () => {
-    const schema = {
+    const type = {
       nestedArray: [{
         number: String,
         function: Function,
@@ -50,9 +50,9 @@ describe('Transform schema', () => {
       }
     }
 
-    const transformedSchema = transformSchema(schema)
+    const transformedtype = transformType(type)
 
-    expect(JSON.stringify(transformedSchema))
-      .to.be.equal(JSON.stringify(schema))
+    expect(JSON.stringify(transformedtype))
+      .to.be.equal(JSON.stringify(type))
   })
 })

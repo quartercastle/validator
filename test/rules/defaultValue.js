@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
 const Value = require('../../lib/exceptions/Value')
-const { defaultValue } = require('../../lib/properties')
+const { defaultValue } = require('../../lib/rules')
 
 describe('Property: defaultValue', () => {
   it('Should set the default value', () => {

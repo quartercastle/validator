@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { optional } = require('../../lib/properties')
+const { optional } = require('../../lib/rules')
 
 describe('Property: optional', () => {
   it('Should accept values as null or undefined', () => {

@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const { symbol } = require('../../lib/rules')
+const { symbol } = require('../../lib/types')
 const types = require('../utils/types')
 
 describe('Rule: symbol', () => {

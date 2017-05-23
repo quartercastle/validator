@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai')
-const { array } = require('../../lib/rules')
-const Schema = require('../../lib/exceptions/Schema')
+const { array } = require('../../lib/types')
+const Type = require('../../lib/exceptions/Type')
 const types = require('../utils/types')
 
 describe('Rule: array', () => {
@@ -32,15 +32,15 @@ describe('Rule: array', () => {
     expect(() => validator([1, 2, 3])).to.be.throw('is above the maximum length')
   })
 
-  it('Should accept a schema as second argument', () => {
-    const schema = [{ field: 'rule' }]
-    const validator = array([], schema)
-    expect(() => validator([])).to.throw(Schema)
+  it('Should accept a type as second argument', () => {
+    const type = [{ field: 'rule' }]
+    const validator = array([], type)
+    expect(() => validator([])).to.throw(Type)
 
     try {
       validator([])
     } catch (err) {
-      expect(err.schema).to.be.deep.equal(schema)
+      expect(err.type).to.be.deep.equal(type)
     }
   })
 })

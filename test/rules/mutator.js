@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
 const Value = require('../../lib/exceptions/Value')
-const { mutator } = require('../../lib/properties')
+const { mutator } = require('../../lib/rules')
 
 describe('Property: mutator', () => {
   it('Should mutate the value', () => {
