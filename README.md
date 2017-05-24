@@ -58,9 +58,10 @@ const schema = {
   updatedAt: Date
 }
 ```
-### Schema rules
-Rules are basically just pure functions and is refered to as `validator functions`
-in this project. A validator function takes a single argument which is the
+### Schema types
+Types are basically just pure functions and is refered to as `validator functions`.
+They are often composed together of different rules.
+A validator function takes a single argument which is the
 value of the assigned key in the schema definition which it should validate.
 Below is an example of a simple validation rule of a string.
 
