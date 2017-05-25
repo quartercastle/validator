@@ -2,7 +2,7 @@
 
 const { expect } = require('chai')
 const Validator = require('../lib/Validator')
-const { string } = require('../lib/types')
+const { string, object } = require('../lib/types')
 
 describe('Validator', () => {
   it('Should validate a value against a type', () => {
@@ -65,13 +65,31 @@ describe('Validator', () => {
   })
 
   it('Should mutate data through a mutator function', () => {
-    const value = { string: 'string' }
+    const value = { nested: { string: 'string' } }
     const validator = new Validator( // eslint-disable-line
       value,
-      { string: string({ mutator: value => 'new string' }) }
+      {
+        nested: {
+          string: string({ mutator: value => 'new string' })
+        }
+      }
     )
 
-    expect(value.string).to.be.equal('new string')
+    expect(value.nested.string).to.be.equal('new string')
+  })
+
+  it('Should set error if validator function returns false', () => {
+    const validator = new Validator('string', value => value !== 'string')
+    expect(validator.errors).to.be.deep.equal({
+      '': 'value is invalid'
+    })
+  })
+
+  it('Should validate a value against a new schema if a new Schema is thrown', () => {
+    const value = { string: 'string' }
+    const schema = object({}, { string: String })
+    const validator = new Validator(value, schema)
+    expect(validator.errors).to.be.deep.equal({})
   })
 
   it('.fails() should return true if any errors where encountered', () => {
