@@ -74,7 +74,7 @@ describe('Validator', () => {
     expect(value.string).to.be.equal('new string')
   })
 
-  it('Should .fails() return true if any errors where encountered', () => {
+  it('.fails() should return true if any errors where encountered', () => {
     let validator = new Validator(1, String)
     expect(validator.fails()).to.be.equal(true)
     validator = new Validator('string', String)
