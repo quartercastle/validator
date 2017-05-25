@@ -16,8 +16,9 @@
   ],
   "files": [
     "lib",
+    "types.js",
     "LICENSE",
-    "Readme.md"
+    "README.md"
   ],
   "engines": {
     "node": ">=6"
