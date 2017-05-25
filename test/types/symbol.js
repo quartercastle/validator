@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const { symbol } = require('../../lib/types')
 const types = require('../utils/types')
 
-describe('Rule: symbol', () => {
+describe('Type: symbol', () => {
   it('Should accept symbols', () => {
     const validator = symbol({ optional: true })
 

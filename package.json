@@ -5,10 +5,10 @@
   "description": "Validate schemas and types",
   "main": "./lib/Validator.js",
   "scripts": {
-    "test": "npm run lint && ./node_modules/.bin/mocha --recursive test/*",
-    "test:watch": "./node_modules/.bin/mocha --watch",
-    "lint": "./node_modules/.bin/standard | ./node_modules/.bin/snazzy",
-    "lint:fix": "./node_modules/.bin/standard --fix | ./node_modules/.bin/snazzy"
+    "test": "npm run lint && nyc mocha --recursive test/*",
+    "test:watch": "mocha --watch",
+    "lint": "standard | snazzy",
+    "lint:fix": "standard --fix | snazzy"
   },
   "tags": [
     "specla",
@@ -36,6 +36,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
+    "nyc": "^10.3.2",
     "pre-commit": "^1.2.2",
     "snazzy": "^7.0.0",
     "standard": "^10.0.*"

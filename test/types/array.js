@@ -5,7 +5,7 @@ const { array } = require('../../lib/types')
 const Type = require('../../lib/exceptions/Type')
 const types = require('../utils/types')
 
-describe('Rule: array', () => {
+describe('Type: array', () => {
   it('Should accept arrays', () => {
     const validator = array({ optional: true })
 

@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const { boolean } = require('../../lib/types')
 const types = require('../utils/types')
 
-describe('Rule: boolean', () => {
+describe('Type: boolean', () => {
   it('Should accept booleans', () => {
     const validator = boolean({ optional: true })
 

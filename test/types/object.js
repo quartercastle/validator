@@ -5,7 +5,7 @@ const { object } = require('../../lib/types')
 const Type = require('../../lib/exceptions/Type')
 const types = require('../utils/types')
 
-describe('Rule: object', () => {
+describe('Type: object', () => {
   it('Should accept objects', () => {
     const validator = object({ optional: true })
 

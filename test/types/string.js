@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const { string } = require('../../lib/types')
 const types = require('../utils/types')
 
-describe('Rule: string', () => {
+describe('Type: string', () => {
   it('Should accept strings', () => {
     const validator = string({ optional: true })
 
