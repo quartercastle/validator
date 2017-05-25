@@ -3,7 +3,7 @@ const { expect } = require('chai')
 const Value = require('../../lib/exceptions/Value')
 const { mutator } = require('../../lib/rules')
 
-describe('Property: mutator', () => {
+describe('Rule: mutator', () => {
   it('Should mutate the value', () => {
     const properties = { mutator: value => 'mutated' }
     expect(() => mutator(properties, 'value')).to.throw(Value)

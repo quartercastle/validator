@@ -2,7 +2,7 @@
 const { expect } = require('chai')
 const { optional } = require('../../lib/rules')
 
-describe('Property: optional', () => {
+describe('Rule: optional', () => {
   it('Should accept values as null or undefined', () => {
     expect(optional({ optional: true }, undefined)).to.be.equal(undefined)
     expect(optional({ optional: true }, null)).to.be.equal(undefined)

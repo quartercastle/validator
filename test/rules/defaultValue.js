@@ -3,7 +3,7 @@ const { expect } = require('chai')
 const Value = require('../../lib/exceptions/Value')
 const { defaultValue } = require('../../lib/rules')
 
-describe('Property: defaultValue', () => {
+describe('Rule: defaultValue', () => {
   it('Should set the default value', () => {
     const properties = { defaultValue: 'hello' }
     expect(() => defaultValue(properties, null)).to.throw(Value)
