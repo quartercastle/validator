@@ -2,7 +2,7 @@
 
 const { expect } = require('chai')
 const { array } = require('../../lib/types')
-const Type = require('../../lib/exceptions/Type')
+const Schema = require('../../lib/exceptions/Schema')
 const types = require('../utils/types')
 
 describe('Type: array', () => {
@@ -32,15 +32,15 @@ describe('Type: array', () => {
     expect(() => validator([1, 2, 3])).to.be.throw('is above the maximum length')
   })
 
-  it('Should accept a type as second argument', () => {
-    const type = [{ field: 'rule' }]
-    const validator = array([], type)
-    expect(() => validator([])).to.throw(Type)
+  it('Should accept a schema as second argument', () => {
+    const schema = [{ field: 'rule' }]
+    const validator = array([], schema)
+    expect(() => validator([])).to.throw(Schema)
 
     try {
       validator([])
     } catch (err) {
-      expect(err.type).to.be.deep.equal(type)
+      expect(err.schema).to.be.deep.equal(schema)
     }
   })
 })

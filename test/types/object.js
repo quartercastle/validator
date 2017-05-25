@@ -2,7 +2,7 @@
 
 const { expect } = require('chai')
 const { object } = require('../../lib/types')
-const Type = require('../../lib/exceptions/Type')
+const Schema = require('../../lib/exceptions/Schema')
 const types = require('../utils/types')
 
 describe('Type: object', () => {
@@ -18,15 +18,15 @@ describe('Type: object', () => {
     }
   })
 
-  it('Should accept a type as second argument', () => {
-    const type = { field: 'rule' }
-    const validator = object({}, type)
-    expect(() => validator({})).to.throw(Type)
+  it('Should accept a schema as second argument', () => {
+    const schema = { field: 'rule' }
+    const validator = object({}, schema)
+    expect(() => validator({})).to.throw(Schema)
 
     try {
       validator({})
     } catch (err) {
-      expect(err.type).to.be.deep.equal(type)
+      expect(err.schema).to.be.deep.equal(schema)
     }
   })
 })
