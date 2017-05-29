@@ -8,7 +8,6 @@ export default {
   plugins: [
     resolve(),
     babel({
-      sourceMaps: true,
       exclude: 'node_modules/**'
     })
   ]
