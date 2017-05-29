@@ -1,7 +1,8 @@
-const transformType = require('./transformType.js')
-const { Schema, Value } = require('./exceptions')
+import transformType from './transformType'
+import { Schema, Value } from './exceptions'
+import types from './types'
 
-class Validator {
+export default class Validator {
   /**
    * Create a new instance of the Validator
    * @param  {Mixed} value
@@ -138,4 +139,6 @@ class Validator {
   }
 }
 
-module.exports = Validator
+for (const type in types) {
+  Validator[type] = types[type]
+}

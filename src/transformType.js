@@ -1,4 +1,4 @@
-const types = require('./types')
+import types from './types'
 
 /**
  * Transform types into validator function or an Object/Array of
@@ -16,7 +16,10 @@ function transformType (type) {
     return transformObject(type)
   }
 
-  if (typeof type === 'function' && !type.prototype) {
+  if (
+    typeof type === 'function' &&
+    (!type.prototype || type.name === '')
+  ) {
     return type
   }
 
@@ -81,4 +84,4 @@ function findType (type) {
   }
 }
 
-module.exports = transformType
+export default transformType

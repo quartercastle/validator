@@ -3,9 +3,7 @@
  * @param {Object|Array} schema
  * @constructor
  */
-function Schema (schema = {}) {
+export default function Schema (schema = {}) {
   this.schema = schema
   return this
 }
-
-module.exports = Schema

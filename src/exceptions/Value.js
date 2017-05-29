@@ -3,9 +3,7 @@
  * @param {Mixed} value
  * @constructor
  */
-function Value (value) {
+export default function Value (value) {
   this.value = value
   return this
 }
-
-module.exports = Value

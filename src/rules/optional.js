@@ -3,7 +3,7 @@
  * @param  {Object} properties
  * @param  {Mixed} value
  */
-module.exports = ({ optional } = {}, value) => {
+export default ({ optional } = {}, value) => {
   if (!optional && (value === undefined || value === null)) {
     throw new Error('is required')
   }

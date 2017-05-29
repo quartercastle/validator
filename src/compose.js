@@ -3,7 +3,7 @@
  * @param {Function} functions
  * @return {Function}
  */
-module.exports = (...functions) => {
+export default (...functions) => {
   return (properties, type) => value => {
     let result
 

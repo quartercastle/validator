@@ -1,6 +1,6 @@
-const compose = require('../compose')
-const Schema = require('../exceptions/Schema')
-const { mutator, defaultValue, optional } = require('../rules')
+import compose from '../compose'
+import Schema from '../exceptions/Schema'
+import { mutator, defaultValue, optional } from '../rules'
 
 /**
  * Object validator function
@@ -9,7 +9,7 @@ const { mutator, defaultValue, optional } = require('../rules')
  * @param  {Object|Array} schema
  * @return {Function}
  */
-module.exports = compose(
+export default compose(
   defaultValue,
   mutator,
   optional,

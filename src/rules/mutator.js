@@ -1,4 +1,4 @@
-const Value = require('../exceptions/Value')
+import Value from '../exceptions/Value'
 
 /**
  * Mutate value of a field, it could be a date string which should be
@@ -6,7 +6,7 @@ const Value = require('../exceptions/Value')
  * @param  {Object} properties
  * @param  {Mixed} value
  */
-module.exports = ({ mutator } = {}, value) => {
+export default ({ mutator } = {}, value) => {
   if (mutator && typeof mutator === 'function') {
     throw new Value(mutator(value))
   }

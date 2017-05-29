@@ -1,5 +1,5 @@
-const compose = require('../compose')
-const { mutator, defaultValue, optional } = require('../rules')
+import compose from '../compose'
+import { mutator, defaultValue, optional } from '../rules'
 
 /**
  * Number validator function
@@ -7,7 +7,7 @@ const { mutator, defaultValue, optional } = require('../rules')
  * @param  {Mixed} value
  * @return {Function}
  */
-module.exports = compose(
+export default compose(
   defaultValue,
   mutator,
   optional,
