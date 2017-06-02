@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "homepage": "https://github.com/Specla/Validator#readme",
   "description": "Validate schemas and types",
-  "main": "./lib/index.js",
+  "main": "./dist/bundle.js",
   "module": "./lib/index.js",
   "scripts": {
     "test": "npm run lint && nyc mocha --recursive test/*",
