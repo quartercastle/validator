@@ -9,6 +9,24 @@ describe('Validator', () => {
     expect(validator.errors).to.be.deep.equal({})
   })
 
+  it('Should evaluate an empty object as the type object', () => {
+    let validator = new Validator({ object: {} }, { object: {} })
+    expect(validator.errors).to.be.deep.equal({})
+    validator = new Validator({ object: 'notObject' }, { object: {} })
+    expect(validator.errors).to.be.deep.equal({
+      object: `isn't an object`
+    })
+  })
+
+  it('Should evaluate an empty array as the type array', () => {
+    let validator = new Validator({ array: [] }, { array: [] })
+    expect(validator.errors).to.be.deep.equal({})
+    validator = new Validator({ array: 'notArray' }, { array: [] })
+    expect(validator.errors).to.be.deep.equal({
+      array: `isn't an array`
+    })
+  })
+
   it('Should validate a value against a schema object', () => {
     const value = { string: 'string', number: 20 }
     const schema = { string: String, number: Number }
