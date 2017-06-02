@@ -1,12 +1,13 @@
 import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 
 export default {
-  entry: 'src/Validator.js',
+  entry: 'lib/index.js',
   dest: 'dist/bundle.js',
   format: 'cjs',
+  moduleName: 'Validator',
   plugins: [
-    resolve(),
+    commonjs(),
     babel({
       exclude: 'node_modules/**'
     })
