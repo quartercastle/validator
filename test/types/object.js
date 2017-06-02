@@ -9,7 +9,7 @@ describe('Type: object', () => {
     const validator = object({ optional: true })
 
     for (const key in types) {
-      if (['object', 'undefined', 'null'].includes(key)) {
+      if (['object', 'date', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
         expect(() => validator(types[key])).to.throw(`isn't an object`)

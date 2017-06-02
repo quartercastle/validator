@@ -8,5 +8,6 @@ module.exports = {
   object: {},
   array: [],
   function: () => {},
-  symbol: Symbol('test')
+  symbol: Symbol('test'),
+  date: new Date()
 }
