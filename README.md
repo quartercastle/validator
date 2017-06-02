@@ -1,16 +1,10 @@
-# WIP: v2.0.0 Specla Validator
+# Specla Validator
 
 [![npm version](https://img.shields.io/npm/v/specla-validator.svg)](https://www.npmjs.com/package/specla-validator)
 [![Build Status](https://travis-ci.org/Specla/Validator.svg?branch=master)](https://travis-ci.org/Specla/Validator)
 [![Dependency Status](https://david-dm.org/specla/validator.svg)](https://david-dm.org/specla/validator)
 [![devDependencies Status](https://david-dm.org/specla/validator/dev-status.svg)](https://david-dm.org/specla/validator?type=dev)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-
-There is already a lot of schema validation libraries for the JavaScript community,
-but i have never really found one that i like. There is always to much boilerplate
-involved with defining the schemas and it just makes a lot of noise in the codebase.
-I want something intuitive, maintainable and extensible. Thats what i try to accomplish
-with `specla-validator`.
 
 ## install
 ```sh
