@@ -1,4 +1,4 @@
-export default = {
+module.exports = {
   string: 'string',
   number: 12031,
   boolean: true,

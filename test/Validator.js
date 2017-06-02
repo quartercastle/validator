@@ -1,8 +1,7 @@
 /* eslint-env mocha */
-
 const { expect } = require('chai')
-const Validator = require('../lib/Validator')
-const { string, object } = require('../lib/types')
+const Validator = require('../lib')
+const { string, object } = require('../lib')
 
 describe('Validator', () => {
   it('Should validate a value against a type', () => {

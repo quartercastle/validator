@@ -1,8 +1,7 @@
 /* eslint-env mocha */
-
 const { expect } = require('chai')
 const transformType = require('../lib/transformType')
-const rules = require('../types')
+const types = require('../lib/types')
 
 describe('Transform type', () => {
   it('Should transform type to validator functions', () => {
@@ -19,7 +18,7 @@ describe('Transform type', () => {
 
     for (const key in transformedtype) {
       expect(transformedtype[key].toString())
-        .to.be.equal(rules[key]().toString())
+        .to.be.equal(types[key]().toString())
     }
   })
 

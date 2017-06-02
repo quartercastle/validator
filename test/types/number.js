@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-
 const { expect } = require('chai')
 const { number } = require('../../lib/types')
 const types = require('../utils/types')

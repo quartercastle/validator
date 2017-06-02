@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-
 const { expect } = require('chai')
 const { object } = require('../../lib/types')
 const Schema = require('../../lib/exceptions/Schema')
