@@ -29,4 +29,10 @@ describe('Type: string', () => {
     expect(validator('12')).to.be.equal(true)
     expect(() => validator('123')).to.be.throw('is above the maximum length')
   })
+
+  it('Should be able to match a regex pattern', () => {
+    const validator = string({ match: /test/ })
+    expect(validator('test')).to.be.equal(true)
+    expect(() => validator('tes')).to.throw(`didn't match the regex pattern`)
+  })
 })
