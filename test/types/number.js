@@ -8,7 +8,7 @@ describe('Type: number', () => {
     const validator = number({ optional: true })
 
     for (const key in types) {
-      if (['number', 'undefined', 'null'].includes(key)) {
+      if (['number', 'integer', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
         expect(() => validator(types[key])).to.throw(`isn't a number`)

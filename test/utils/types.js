@@ -1,6 +1,7 @@
 module.exports = {
   string: 'string',
-  number: 12031,
+  number: 12031.23,
+  integer: 3,
   boolean: true,
   undefined: undefined,
   null: null,

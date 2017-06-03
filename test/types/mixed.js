@@ -25,7 +25,9 @@ describe('Type: mixed', () => {
 
   it('Should be able to set multiple allowed types', () => {
     const validator = mixed({ optional: true, allows: [String, Number] })
-    const accepts = ['string', 'email', 'url', 'number', 'undefined', 'null']
+    const accepts = [
+      'string', 'email', 'url', 'number', 'integer', 'undefined', 'null'
+    ]
     for (const type in types) {
       if (accepts.includes(type)) {
         expect(validator(types[type])).to.be.equal(true)
