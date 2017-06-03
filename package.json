@@ -21,7 +21,6 @@
   "files": [
     "dist",
     "lib",
-    "types.js",
     "LICENSE",
     "README.md"
   ],
