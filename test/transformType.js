@@ -4,7 +4,7 @@ const transformType = require('../lib/transformType')
 const types = require('../lib/types')
 
 describe('Transform type', () => {
-  it('Should transform type to validator functions', () => {
+  it('Should transform type to validator function', () => {
     const type = {
       string: String,
       number: Number,
