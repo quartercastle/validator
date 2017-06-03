@@ -4,7 +4,7 @@
   "homepage": "https://github.com/Specla/Validator#readme",
   "description": "Validate schemas and types",
   "main": "./dist/bundle.js",
-  "module": "./lib/index.js",
+  "module": "./dist/bundle.js",
   "scripts": {
     "test": "npm run lint && nyc mocha --recursive test/*",
     "test:watch": "mocha --watch",
@@ -44,7 +44,6 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
