@@ -8,7 +8,7 @@ describe('Type: string', () => {
     const validator = string({ optional: true })
 
     for (const key in types) {
-      if (['string', 'undefined', 'null'].includes(key)) {
+      if (['string', 'email', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
         expect(() => validator(types[key])).to.throw(`isn't a string`)

@@ -9,5 +9,6 @@ module.exports = {
   array: [],
   function: () => {},
   symbol: Symbol('test'),
-  date: new Date()
+  date: new Date(),
+  email: 'test@example.com'
 }
