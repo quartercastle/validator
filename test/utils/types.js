@@ -10,5 +10,6 @@ module.exports = {
   function: () => {},
   symbol: Symbol('test'),
   date: new Date(),
-  email: 'test@example.com'
+  email: 'test@example.com',
+  url: 'https://example.com'
 }
