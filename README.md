@@ -6,105 +6,270 @@
 [![devDependencies Status](https://david-dm.org/specla/validator/dev-status.svg)](https://david-dm.org/specla/validator?type=dev)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-## install
-```sh
-npm install --save @specla/validator
-```
+A `3 kb` gzip'ed schema validator, built for developers, with extensibility and performance in mind.
+The validator is both compatible with Node.js and Browser environments out of
+the box.
 
-## Usage
 ```js
+import Validator, { string, number } from '@specla/validator'
+
 const schema = {
   name: String,
+  skills:[{
+    type: string(),
+    experience: number({ min: 0, max: 10 })
+  }],
   createdAt: Date
 }
 
 const data = {
   name: 'John Doe',
+  skills: [{
+    type: 'JavaScript',
+    experience: 10
+  }],
   createdAt: new Date()
 }
 
 const validator = new Validator(data, schema)
 
-if (validator.fails()) {
+console.log(validator.fails(), validator.errors)
+```
+## Content
+  - [Install](#install)
+  - [Schema definition](#schema-definition)
+  - [Types](#types)
+    - [Array](#array)
+    - [Boolean](#boolean)
+    - [Date](#date)
+    - [Email](#email)
+    - [Integer](#integer)
+    - [Mixed](#mixed)
+    - [Number](#number)
+    - [Object](#object)
+    - [String](#string)
+    - [Symbol](#symbol)
+    - [Url](#url)
+    - [Custom type](#custom-type)
+  - [Validator](#validator)
+    - [Errors](#errors)
+
+
+## Install
+Download `@specla/validator` from npm and your are good to go!
+```sh
+npm install --save @specla/validator
+```
+
+## Schema definition
+A schema is an array or object where the key is the target to validated
+and the value of the schema are a validator function that knows how the value
+of the target should be validated.
+```js
+const schema = {
+  target: function validator (value) {
+    // do something to validate the targets value
+  }
+}
+
+const arraySchema = [function validator (value) {}]
+```
+Specla Validator supports js standard types. This is possible because the Validator transforms
+the schema into a transformed schema with validator functions for you at run time.
+```js
+// Defined schema with js types
+const schema = {
+  string: String,
+}
+// The above is transformed into the schema below at run time
+const transformedSchema = {
+  string: string()
+}
+```
+The Validator ships with some validator functions you can use to easier define
+your schema and your constraints.
+```js
+const schema = {
+  // validates a number from 0 - 100 with a precision of to decimals
+  number: number({ min: 0, max: 100, precision: 2 })
+}
+```
+All types shipped with this modules is required by default, so if you have a
+target in the schema which should be optional, you just have to specify it.
+```js
+// will accept strings, null and undefined.
+string({ optional: true })
+```
+
+## Types
+
+#### array(`properties: Object`, `schema: Array`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `min: Number`: should be above the minimum length.
+    - `max: Number`: should be below the maximum length.
+  - `schema`: Schema to validate the arrays values against.
+
+```js
+const schema = {
+  // this validates that the array has between 0 - 10 items which are strings.
+  array: array({ min: 0, max: 10 }, [String])
+}
+```
+
+
+#### boolean(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `cast: Boolean`: if this is set to true the validator will try to cast all values to booleans
+
+```js
+const schema = {
+  // this validates booleans and tries to cast a value to a boolean if its some other type.
+  boolean: boolean({ cast: true })
+}
+```
+
+#### date(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `min: Number`: the give date should be above the minimum date.
+    - `max: Number`: the give date should be below the maximum date.
+
+```js
+const schema = {
+  // this validates a date between now to 2018
+  date: date({ min: new Date(), max: new Date(2018) })
+}
+```
+
+#### email(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+
+```js
+const schema = {
+  // this validates that a string is a valid email
+  email: email()
+}
+```
+
+#### integer(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `cast: Boolean`: if this is set to true the validator will try to cast all values to integers
+    - `min: Number`: should be above the minimum number.
+    - `max: Number`: should be below the maximum number.
+
+```js
+const schema = {
+  // this validates a number is an integer
+  integer: integer()
+}
+```
+
+#### mixed(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `allows: Array`: specify which types it accepts, default is all types
+
+```js
+const schema = {
+  // this validates that the targets value can be either a String or a Number
+  mixed: mixed({ allows: [String, Number] })
+}
+```
+
+#### number(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `cast: Boolean`: if this is set to true the validator will try to cast all values to integers
+    - `min: Number`: should be above the minimum number.
+    - `max: Number`: should be below the maximum number.
+    - `precision: Number`: the number should have a precision of to decimals
+
+```js
+const schema = {
+  // this validates a number with a decimal precision of 2, it will also try to
+  // cast any values into a number
+  number: number({ cast: true, precision: 2 })
+}
+```
+
+#### object(`properties: Object`, `schema: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+  - `schema`: Schema to validate the object against.
+
+```js
+const schema = {
+  // this validates an optional object with the schema { name: String }
+  object: object({ optional: true }, {
+    name: String
+  })
+}
+```
+
+#### string(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `cast: Boolean`: if this is set to true the validator will try to cast all values into a string
+    - `min: Number`: should be above the minimum length.
+    - `max: Number`: should be below the maximum length.
+    - `lowercase: Boolean`: the string should be lowercased
+    - `uppercase: Boolean`: the string should be uppercased
+    - `truncate: Boolean`: if the string is above the max value then truncate the string
+    - `match: RegExp`: string should match the regex pattern
+
+```js
+const schema = {
+  // this validates a string is below max length otherwise it will be truncated
+  string: string({ max: 10, truncate: true })
+}
+```
+
+#### symbol(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+
+```js
+const schema = {
+  // this validates a symbol
+  symbol: symbol()
+}
+```
+
+#### url(`properties: Object`)
+  - `properties`:
+    - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
+    - `optional: Boolean`: allows values to be null or undefined
+    - `protocol: Boolean`: protocol should be specified in the url
+    - `secure: Boolean`: url should use https
+
+```js
+const schema = {
+  // this validates a secure url, does only accept urls that uses https
+  url: url({ secure: true })
+}
+```
+
+## Validator
+```js
+const validator = new Validator(data, schema)
+
+if (validator.failst()) {
   console.log(validator.errors)
 } else {
   console.log('Looks good!')
-}
-```
-
-# The Schema
-```js
-const schema = {
-  field: function validatorFunction (value) {}
-}
-```
-
-```js
-const schema = {
-  name: string({ required: true, max: 40 }),
-  email: email({ required: true }),
-  age: value => value === 23,
-  skills: [{
-    type: String,
-    experience: number({ min: 0, max: 10 })
-  }],
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-### Schema types
-Types are basically just pure functions and is refered to as `validator functions`.
-They are often composed together of different rules.
-A validator function takes a single argument which is the
-value of the assigned key in the schema definition which it should validate.
-Below is an example of a simple validation rule of a string.
-
-```js
-const string = value => {
-  if (typeof value !== 'string') {
-    throw new Error(`The given value wasn't a type of string`)
-  }
-
-  return true
-}
-
-// The rule can now be used in the schema like below
-const schema = {
-  name: string
-}
-```
-
-### Advanced Rules
-In many cases it would be nice if we could give our rule some dynamic properties,
-a property could be if the value is required or a min/max length of the value.
-A greate way to solve this problem is to wrap the rule definition into a function
-which accepts some properties. We can then return our configured validator function.
-```js
-
-function string ({ required, min, max }) {
-  return value => {
-    if (typeof value !== 'string') {
-      throw new Error(`The given value wasn't a type of string`)
-    }
-
-    if (required && value === '') {
-      throw new Error(`The value is required`)
-    }
-
-    if (min && value.length < min) {
-      throw new Error(`The value is under the min length`)
-    }
-
-    if (max && value.length > max) {
-      throw new Error(`The value is over the max length`)
-    }
-
-    return true
-  }
-}
-
-// The rule can now be used in the schema like below
-const schema = {
-  name: string({ required: true, min: 3, max: 10 })
 }
 ```
