@@ -29,4 +29,12 @@ describe('Type: number', () => {
     expect(validator(2)).to.be.equal(true)
     expect(() => validator(3)).to.be.throw('is above the maximum')
   })
+
+  it('Should require number to a a specific precision', () => {
+    const validator = number({ precision: 2 })
+    expect(validator(2.11)).to.be.equal(true)
+    expect(() => validator(12.111)).to.throw(
+      `number isn't the correct precision`
+    )
+  })
 })
