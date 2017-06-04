@@ -16,6 +16,18 @@ describe('Type: string', () => {
     }
   })
 
+  it('Should require string to be lowercased', () => {
+    const validator = string({ lowercase: true })
+    expect(validator('works')).to.be.equal(true)
+    expect(() => validator('Fails')).to.throw(`string isn't lowercased`)
+  })
+
+  it('Should require string to be uppercased', () => {
+    const validator = string({ uppercase: true })
+    expect(validator('WORKS')).to.be.equal(true)
+    expect(() => validator('Fails')).to.throw(`string isn't uppercased`)
+  })
+
   it('Should be able to specify min length', () => {
     const validator = string({ min: 2 })
     expect(validator('12')).to.be.equal(true)
@@ -28,6 +40,16 @@ describe('Type: string', () => {
     expect(validator('1')).to.be.equal(true)
     expect(validator('12')).to.be.equal(true)
     expect(() => validator('123')).to.be.throw('is above the maximum length')
+  })
+
+  it('Should truncate string if max length is exceeded and the truncate is true', () => {
+    const validator = string({ max: 4, truncate: true })
+    expect(validator('1234')).to.be.equal(true)
+    try {
+      validator('12345')
+    } catch ({ value }) {
+      expect(value).to.be.equal('1234')
+    }
   })
 
   it('Should be able to match a regex pattern', () => {
