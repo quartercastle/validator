@@ -16,6 +16,15 @@ describe('Type: string', () => {
     }
   })
 
+  it('Should try to cast the value to a string', () => {
+    const validator = string({ cast: true })
+    try {
+      validator(5.1)
+    } catch ({ value }) {
+      expect(value).to.be.equal('5.1')
+    }
+  })
+
   it('Should require string to be lowercased', () => {
     const validator = string({ lowercase: true })
     expect(validator('works')).to.be.equal(true)
