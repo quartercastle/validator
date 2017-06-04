@@ -16,6 +16,16 @@ describe('Type: number', () => {
     }
   })
 
+  it('Should try to cast a value to a number', () => {
+    const validator = number({ cast: true })
+    expect(() => validator('test')).to.throw(`isn't a number`)
+    try {
+      validator('1.1')
+    } catch ({ value }) {
+      expect(value).to.be.equal(1.1)
+    }
+  })
+
   it('Should be able to specify min', () => {
     const validator = number({ min: 2 })
     expect(validator(2)).to.be.equal(true)
