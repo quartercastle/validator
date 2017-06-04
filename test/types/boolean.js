@@ -15,4 +15,20 @@ describe('Type: boolean', () => {
       }
     }
   })
+
+  it('Should try to cast the value to a boolean', () => {
+    const validator = boolean({ cast: true })
+
+    try {
+      validator('true')
+    } catch ({ value }) {
+      expect(value).to.be.equal(true)
+    }
+
+    try {
+      validator('false')
+    } catch ({ value }) {
+      expect(value).to.be.equal(false)
+    }
+  })
 })
