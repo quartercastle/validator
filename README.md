@@ -15,6 +15,7 @@ import Validator, { string, number } from '@specla/validator'
 
 const schema = {
   name: string(),
+  age: value => value > 16,
   skills: [{
     type: string(),
     experience: number({ min: 0, max: 10 })
@@ -24,6 +25,7 @@ const schema = {
 
 const data = {
   name: 'John Doe',
+  age: 23,
   skills: [{
     type: 'Validation',
     experience: 10
