@@ -289,7 +289,7 @@ const schema = {
 ```
 ### Avanced types
 Often we want to set some other constraints as well, than just verifying its a string.
-A great way to handle this is to wrappe the validator into a higher order function.
+A great way to handle this is to wrap the validator into a higher order function.
 which can take some properties through an argument.
 ```js
 // an implementation of a validator function which can be configured through properties
