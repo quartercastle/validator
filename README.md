@@ -92,6 +92,9 @@ const transformedSchema = {
 The Validator ships with some validator functions you can use to easier define
 your schema and your constraints.
 ```js
+// import types from @specla/validator
+import { array, boolean, number, integer, object, string, symbol, mixed, date, email, url } from '@specla/validator'
+
 const schema = {
   // validates a number from 0 - 100 with a precision of to decimals
   number: number({ min: 0, max: 100, precision: 2 })
