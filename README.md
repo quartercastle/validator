@@ -53,6 +53,7 @@ console.log(validator.fails(), validator.errors)
     - [Url](#urlproperties-object)
   - [Custom types](#custom-types)
     - [Avanced types](#avanced-types)
+    - [Mutate value from within type](#mutate-value-from-within-type)
   - [Validator](#validator)
     - [Errors](#errors)
 
@@ -313,6 +314,27 @@ function string(properties = {}) {
 // the string validator can be used in the schema like below
 const schema = {
   target: string({ min: 4, max: 255 })
+}
+```
+
+### Mutate value from within type
+Sometimes your types will have to mutate the given value. An example could be
+that you want to be able to specify a default value which is set if the given
+value are `undefined` or `null`. This can be done by throwing a special exception
+shipped with this package, see example below.
+```js
+import Value from '@specla/validator/lib/exceptions/Value'
+
+// simple implementation of a type which sets a default value if the given
+// value are null or undefined
+function string({ defaultValue }) {
+  return value => {
+    if (defaultValue && (value === undefined || value === null)) {
+      throw new Value(defaultValue)
+    }
+
+    return true
+  }
 }
 ```
 
