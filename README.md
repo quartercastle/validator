@@ -14,8 +14,8 @@ the box.
 import Validator, { string, number } from '@specla/validator'
 
 const schema = {
-  name: String,
-  skills:[{
+  name: string(),
+  skills: [{
     type: string(),
     experience: number({ min: 0, max: 10 })
   }],
@@ -25,7 +25,7 @@ const schema = {
 const data = {
   name: 'John Doe',
   skills: [{
-    type: 'JavaScript',
+    type: 'Validation',
     experience: 10
   }],
   createdAt: new Date()
@@ -264,12 +264,15 @@ const schema = {
 ```
 
 ## Validator
+Compare the data against the schema by invokating the the validator with the data
+as the first argument and the schema as the second.
 ```js
 const validator = new Validator(data, schema)
-
-if (validator.failst()) {
-  console.log(validator.errors)
-} else {
-  console.log('Looks good!')
-}
+```
+The Validator constructor returns a new Validator object, which will collect all
+errors encounted during the validation process. You can check if any errors was
+registered with the `fails` method.
+```js
+validator.fails() // returns a boolean, is true if any errors was encountered otherwise false
+validator.errors // will contain an object with all errors encountered during validation
 ```
