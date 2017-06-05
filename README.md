@@ -269,8 +269,8 @@ const schema = {
 ## Custom types
 Specla Validator is made to be flexible and extensible. All types are just
 pure functions. Therefore its easy to create your own types or use other
-libraries e.g lodash's `isEmail` could be used.
-If the valdator should be notified about a an error, the validator should just
+libraries methods as validators.
+If the valdator should be notified about an error, the type should just
 throw one, the validator will catch it.
 ```js
 // A simple implementation of a string validator
