@@ -3,7 +3,6 @@
 [![npm version](https://img.shields.io/npm/v/@specla/validator.svg)](https://www.npmjs.com/package/@specla/validator)
 [![Build Status](https://travis-ci.org/specla/validator.svg?branch=master)](https://travis-ci.org/specla/validator)
 [![Dependency Status](https://david-dm.org/specla/validator.svg)](https://david-dm.org/specla/validator)
-[![devDependencies Status](https://david-dm.org/specla/validator/dev-status.svg)](https://david-dm.org/specla/validator?type=dev)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 A `3 kb` gzip'ed schema validator, built for developers, with extensibility and performance in mind.
