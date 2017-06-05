@@ -193,7 +193,7 @@ const schema = {
   - `properties`:
     - `defaultValue: Mixed`: if the value is null or undefined then set default value instead.
     - `optional: Boolean`: allows values to be null or undefined
-    - `cast: Boolean`: if this is set to true the validator will try to cast all values to integers
+    - `cast: Boolean`: if this is set to true the validator will try to cast all values to numbers
     - `min: Number`: should be above the minimum number.
     - `max: Number`: should be below the maximum number.
     - `precision: Number`: the number should have a precision of to decimals
@@ -201,7 +201,7 @@ const schema = {
 ```js
 const schema = {
   // this validates a number with a decimal precision of 2, it will also try to
-  // cast any values into a number
+  // cast any value into a number
   number: number({ cast: true, precision: 2 })
 }
 ```
@@ -276,7 +276,7 @@ throw one, the validator will catch it.
 // A simple implementation of a string validator
 const string = value => {
   if (typeof value !== 'string') {
-    throw new Error('the given valude was not a string')
+    throw new Error('the given value was not a string')
   }
 
   return true
@@ -289,14 +289,14 @@ const schema = {
 ```
 ### Avanced types
 Often we want to set some other constraints as well, than just verifying its a string.
-A great way to handle this is to wrap the validator into a higher order function.
-which can take some properties through an argument.
+A great way to handle this is to wrap the validator into a higher order function,
+which can be configured through an argument.
 ```js
 // an implementation of a validator function which can be configured through properties
 function string(properties = {}) {
   return value => {
     if (typeof value !== 'string') {
-      throw new Error('the given valude was not a string')
+      throw new Error('the given value was not a string')
     }
 
     if (properties.min && properties.min > value.length) {
@@ -329,4 +329,15 @@ registered with the `fails` method.
 ```js
 validator.fails() // returns a boolean, is true if any errors was encountered otherwise false
 validator.errors // will contain an object with all errors encountered during validation
+```
+If you want to catch the error as it happens, you can stream errors by configuring
+the Validator like below.
+```js
+new Validator(data, schema, {
+  onError: error => {
+    error.context // the place in the schema where the validation failed.
+    error.message // what failed.
+    error.value   // the value that caused the validator to fail.
+  }
+})
 ```
