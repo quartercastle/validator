@@ -1,6 +1,6 @@
 {
   "name": "@specla/validator",
-  "version": "0.0.0",
+  "version": "1.0.0-0",
   "homepage": "https://github.com/Specla/Validator#readme",
   "description": "Validate schemas and types",
   "main": "./dist/bundle.js",
