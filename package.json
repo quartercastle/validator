@@ -2,7 +2,7 @@
   "name": "@specla/validator",
   "version": "1.0.0-1",
   "homepage": "https://github.com/Specla/Validator#readme",
-  "description": "Validate schemas and types",
+  "description": "Super fast, 3 kb Schema validator for Node.js and the Browsers",
   "main": "./dist/bundle.js",
   "module": "./dist/bundle.js",
   "scripts": {
