@@ -52,7 +52,8 @@ console.log(validator.fails(), validator.errors)
     - [String](#stringproperties-object)
     - [Symbol](#symbolproperties-object)
     - [Url](#urlproperties-object)
-    - [Custom type](#custom-type)
+  - [Custom types](#custom-types)
+    - [Avanced types](#avanced-types)
   - [Validator](#validator)
     - [Errors](#errors)
 
@@ -262,6 +263,57 @@ const schema = {
 const schema = {
   // this validates a secure url, does only accept urls that uses https
   url: url({ secure: true })
+}
+```
+
+## Custom types
+Specla Validator is made to be flexible and extensible. All types are just
+pure functions. Therefore its easy to create your own types or use other
+libraries e.g lodash's `isEmail` could be used.
+If the valdator should be notified about a an error, the validator should just
+throw one, the validator will catch it.
+```js
+// A simple implementation of a string validator
+const string = value => {
+  if (typeof value !== 'string') {
+    throw new Error('the given valude was not a string')
+  }
+
+  return true
+}
+
+// the string validator function can be used in a schema like below
+const schema = {
+  target: string
+}
+```
+### Avanced types
+Often we want to set some other constraints as well, than just verifying its a string.
+A great way to handle this is to wrappe the validator into a higher order function.
+which can take some properties through an argument.
+```js
+// an implementation of a validator function which can be configured through properties
+function string(properties = {}) {
+  return value => {
+    if (typeof value !== 'string') {
+      throw new Error('the given valude was not a string')
+    }
+
+    if (properties.min && properties.min > value.length) {
+      throw new Error('the given string is below the min length')
+    }
+
+    if (properties.max && properties.max < value.length) {
+      throw new Error('the given string is above the max length')
+    }
+
+    return true
+  }
+}
+
+// the string validator can be used in the schema like below
+const schema = {
+  target: string({ min: 4, max: 255 })
 }
 ```
 
