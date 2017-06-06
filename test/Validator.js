@@ -14,7 +14,7 @@ describe('Validator', () => {
     expect(validator.errors).to.be.deep.equal({})
     validator = new Validator({ object: 'notObject' }, { object: {} })
     expect(validator.errors).to.be.deep.equal({
-      object: `isn't an object`
+      object: 'should be an object'
     })
   })
 
@@ -23,7 +23,7 @@ describe('Validator', () => {
     expect(validator.errors).to.be.deep.equal({})
     validator = new Validator({ array: 'notArray' }, { array: [] })
     expect(validator.errors).to.be.deep.equal({
-      array: `isn't an array`
+      array: `should be an array`
     })
   })
 
@@ -43,7 +43,7 @@ describe('Validator', () => {
 
   it(`Should tell object is required when undefined or null is given as the value`, () => {
     const schema = { string: String }
-    const error = { '': `isn't an object` }
+    const error = { '': `should be an object` }
     let validator = new Validator(undefined, schema)
     expect(validator.errors).to.be.deep.equal(error)
     validator = new Validator(null, schema)
@@ -52,22 +52,22 @@ describe('Validator', () => {
 
   it(`Should tell array is required when undefined or null is given as the value`, () => {
     const schema = [{ string: String }]
-    const error = { '': `isn't an array` }
+    const error = { '': `should be an array` }
     let validator = new Validator(undefined, schema)
     expect(validator.errors).to.be.deep.equal(error)
     validator = new Validator(null, schema)
     expect(validator.errors).to.be.deep.equal(error)
   })
 
-  it(`Should tell if a value isn't defined in the schema`, () => {
+  it(`Should tell if a key isn't defined in the schema`, () => {
     let validator = new Validator({ string: 'string' }, {})
     expect(validator.errors).to.be.deep.equal({
-      string: `isn't defined in the schema`
+      string: `key is not defined in the schema`
     })
 
     validator = new Validator([{ string: 'string' }], [{}])
     expect(validator.errors).to.be.deep.equal({
-      '0.string': `isn't defined in the schema`
+      '0.string': `key is not defined in the schema`
     })
   })
 
@@ -123,14 +123,14 @@ describe('Validator', () => {
       onError: err => {
         expect(err).to.be.deep.equal({
           context: ['number'],
-          message: `isn't a number`,
+          message: `should be a number`,
           value: '10'
         })
       }
     })
 
     expect(validator.errors).to.be.deep.equal({
-      number: `isn't a number`
+      number: `should be a number`
     })
   })
 })

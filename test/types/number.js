@@ -11,14 +11,14 @@ describe('Type: number', () => {
       if (['number', 'integer', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't a number`)
+        expect(() => validator(types[key])).to.throw('should be a number')
       }
     }
   })
 
   it('Should try to cast a value to a number', () => {
     const validator = number({ cast: true })
-    expect(() => validator('test')).to.throw(`isn't a number`)
+    expect(() => validator('test')).to.throw('should be a number')
     try {
       validator('1.1')
     } catch ({ value }) {
@@ -30,21 +30,25 @@ describe('Type: number', () => {
     const validator = number({ min: 2 })
     expect(validator(2)).to.be.equal(true)
     expect(validator(3)).to.be.equal(true)
-    expect(() => validator(1)).to.be.throw('is below the minimum')
+    expect(() => validator(1)).to.be.throw(
+      'number should be more than or equal to 2'
+    )
   })
 
   it('Should be able to specify max', () => {
     const validator = number({ max: 2 })
     expect(validator(1)).to.be.equal(true)
     expect(validator(2)).to.be.equal(true)
-    expect(() => validator(3)).to.be.throw('is above the maximum')
+    expect(() => validator(3)).to.be.throw(
+      'number should be less than or equal to 2'
+    )
   })
 
   it('Should require number to a a specific precision', () => {
     const validator = number({ precision: 2 })
     expect(validator(2.11)).to.be.equal(true)
     expect(() => validator(12.111)).to.throw(
-      `number isn't the correct precision`
+      'number should have a precision of 2 decimals'
     )
   })
 })
