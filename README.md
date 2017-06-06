@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@specla/validator.svg)](https://www.npmjs.com/package/@specla/validator)
 [![Build Status](https://travis-ci.org/specla/validator.svg?branch=master)](https://travis-ci.org/specla/validator)
+[![Coverage Status](https://coveralls.io/repos/github/specla/validator/badge.svg?branch=master)](https://coveralls.io/github/specla/validator?branch=master)
 [![Dependency Status](https://david-dm.org/specla/validator.svg)](https://david-dm.org/specla/validator)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
