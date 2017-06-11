@@ -12,7 +12,7 @@ describe('Type: object', () => {
       if (['object', 'date', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't an object`)
+        expect(() => validator(types[key])).to.throw('should be an object')
       }
     }
   })

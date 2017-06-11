@@ -11,7 +11,7 @@ describe('Type: email', () => {
       if (['email', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't an email`)
+        expect(() => validator(types[key])).to.throw('should be a valid email')
       }
     }
   })

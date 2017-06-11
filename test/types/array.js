@@ -12,7 +12,7 @@ describe('Type: array', () => {
       if (['array', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't an array`)
+        expect(() => validator(types[key])).to.throw('should be an array')
       }
     }
   })
@@ -21,14 +21,18 @@ describe('Type: array', () => {
     const validator = array({ min: 2 })
     expect(validator([1, 2])).to.be.equal(true)
     expect(validator([1, 2, 3])).to.be.equal(true)
-    expect(() => validator([1])).to.be.throw('is below the minimum length')
+    expect(() => validator([1])).to.be.throw(
+      'array should have a length of minimum 2 items'
+    )
   })
 
   it('Should be able to specify max length', () => {
     const validator = array({ max: 2 })
     expect(validator([1])).to.be.equal(true)
     expect(validator([1, 2])).to.be.equal(true)
-    expect(() => validator([1, 2, 3])).to.be.throw('is above the maximum length')
+    expect(() => validator([1, 2, 3])).to.be.throw(
+      'array should have a length of maximum 2 items'
+    )
   })
 
   it('Should accept a schema as second argument', () => {
