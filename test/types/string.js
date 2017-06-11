@@ -11,7 +11,7 @@ describe('Type: string', () => {
       if (['string', 'email', 'url', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't a string`)
+        expect(() => validator(types[key])).to.throw('should be a string')
       }
     }
   })
@@ -28,27 +28,31 @@ describe('Type: string', () => {
   it('Should require string to be lowercased', () => {
     const validator = string({ lowercase: true })
     expect(validator('works')).to.be.equal(true)
-    expect(() => validator('Fails')).to.throw(`string isn't lowercased`)
+    expect(() => validator('Fails')).to.throw('string should be lowercased')
   })
 
   it('Should require string to be uppercased', () => {
     const validator = string({ uppercase: true })
     expect(validator('WORKS')).to.be.equal(true)
-    expect(() => validator('Fails')).to.throw(`string isn't uppercased`)
+    expect(() => validator('Fails')).to.throw('string should be uppercased')
   })
 
   it('Should be able to specify min length', () => {
     const validator = string({ min: 2 })
     expect(validator('12')).to.be.equal(true)
     expect(validator('123')).to.be.equal(true)
-    expect(() => validator('1')).to.be.throw('is below the minimum length')
+    expect(() => validator('1')).to.be.throw(
+      'string should have a length of minimum 2 characters'
+    )
   })
 
   it('Should be able to specify max length', () => {
     const validator = string({ max: 2 })
     expect(validator('1')).to.be.equal(true)
     expect(validator('12')).to.be.equal(true)
-    expect(() => validator('123')).to.be.throw('is above the maximum length')
+    expect(() => validator('123')).to.be.throw(
+      'string should have a length of maximum 2 characters'
+    )
   })
 
   it('Should truncate string if max length is exceeded and the truncate is true', () => {
@@ -64,6 +68,8 @@ describe('Type: string', () => {
   it('Should be able to match a regex pattern', () => {
     const validator = string({ match: /test/ })
     expect(validator('test')).to.be.equal(true)
-    expect(() => validator('tes')).to.throw(`didn't match the regex pattern`)
+    expect(() => validator('tes')).to.throw(
+      'string did not match the regex pattern'
+    )
   })
 })

@@ -11,7 +11,7 @@ describe('Type: url', () => {
       if (['url', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't a valid url`)
+        expect(() => validator(types[key])).to.throw('should be a valid url')
       }
     }
   })
@@ -19,15 +19,17 @@ describe('Type: url', () => {
   it('Should require protocol', () => {
     const validator = url({ protocol: true })
     expect(validator('http://works.com')).to.be.equal(true)
-    expect(() => validator('works.com')).to.throw('url protocol is required')
+    expect(() => validator('works.com')).to.throw(
+      'http(s):// protocol is required'
+    )
   })
 
   it('Should only accept secure urls', () => {
     const validator = url({ secure: true })
     expect(validator('https://secure.com')).to.be.equal(true)
     expect(() => validator('http://notsecure.com'))
-      .to.throw('only secure urls are accepted')
+      .to.throw('only https urls are accepted')
     expect(() => validator('notsecure.com'))
-      .to.throw('only secure urls are accepted')
+      .to.throw('only https urls are accepted')
   })
 })
