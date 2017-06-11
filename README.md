@@ -55,7 +55,6 @@ console.log(validator.fails(), validator.errors)
   - [Custom types](#custom-types)
     - [Avanced types](#avanced-types)
   - [Validator](#validator)
-    - [Errors](#errors)
 
 
 ## Install
