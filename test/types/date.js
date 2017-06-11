@@ -11,14 +11,16 @@ describe('Type: date', () => {
       if (['date', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't a date object`)
+        expect(() => validator(types[key])).to.throw('should be a date object')
       }
     }
   })
 
   it('Should be able to specify a min date', () => {
     const validator = date({ min: new Date(2017, 5, 1) })
-    expect(() => validator(new Date(2017, 4, 1))).to.throw('below the min date')
+    expect(() => validator(new Date(2017, 4, 1))).to.throw(
+      'should be above the minimum date'
+    )
   })
 
   it(`Should tell if the min property isn't a date object`, () => {
@@ -30,7 +32,9 @@ describe('Type: date', () => {
 
   it('Should be able to specify a max date', () => {
     const validator = date({ max: new Date(2017, 5, 1) })
-    expect(() => validator(new Date(2017, 6, 1))).to.throw('above the max date')
+    expect(() => validator(new Date(2017, 6, 1))).to.throw(
+      'should be below the maximum date'
+    )
   })
 
   it(`Should tell if the max property isn't a date object`, () => {

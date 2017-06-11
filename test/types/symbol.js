@@ -11,7 +11,7 @@ describe('Type: symbol', () => {
       if (['symbol', 'undefined', 'null'].includes(key)) {
         expect(validator(types[key])).to.be.equal(true)
       } else {
-        expect(() => validator(types[key])).to.throw(`isn't a symbol`)
+        expect(() => validator(types[key])).to.throw('should be a symbol')
       }
     }
   })

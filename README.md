@@ -2,8 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/@specla/validator.svg)](https://www.npmjs.com/package/@specla/validator)
 [![Build Status](https://travis-ci.org/specla/validator.svg?branch=master)](https://travis-ci.org/specla/validator)
+[![Coverage Status](https://coveralls.io/repos/github/specla/validator/badge.svg?branch=master)](https://coveralls.io/github/specla/validator?branch=master)
 [![Dependency Status](https://david-dm.org/specla/validator.svg)](https://david-dm.org/specla/validator)
-[![devDependencies Status](https://david-dm.org/specla/validator/dev-status.svg)](https://david-dm.org/specla/validator?type=dev)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 A `3 kb` gzip'ed schema validator, built for developers, with extensibility and performance in mind.
@@ -54,6 +54,7 @@ console.log(validator.fails(), validator.errors)
     - [Url](#urlproperties-object)
   - [Custom types](#custom-types)
     - [Avanced types](#avanced-types)
+    - [Mutate value from within type](#mutate-value-from-within-type)
   - [Validator](#validator)
     - [Errors](#errors)
 
@@ -92,6 +93,9 @@ const transformedSchema = {
 The Validator ships with some validator functions you can use to easier define
 your schema and your constraints.
 ```js
+// import types from @specla/validator
+import { array, boolean, number, integer, object, string, symbol, mixed, date, email, url } from '@specla/validator'
+
 const schema = {
   // validates a number from 0 - 100 with a precision of to decimals
   number: number({ min: 0, max: 100, precision: 2 })
@@ -314,6 +318,27 @@ function string(properties = {}) {
 // the string validator can be used in the schema like below
 const schema = {
   target: string({ min: 4, max: 255 })
+}
+```
+
+### Mutate value from within type
+Sometimes your types will have to mutate the given value. An example could be
+that you want to be able to specify a default value which is set if the given
+value are `undefined` or `null`. This can be done by throwing a special exception
+shipped with this package, see example below.
+```js
+import Value from '@specla/validator/lib/exceptions/Value'
+
+// simple implementation of a type which sets a default value if the given
+// value are null or undefined
+function string({ defaultValue }) {
+  return value => {
+    if (defaultValue && (value === undefined || value === null)) {
+      throw new Value(defaultValue)
+    }
+
+    return true
+  }
 }
 ```
 
