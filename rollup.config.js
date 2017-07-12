@@ -3,7 +3,7 @@ import commonjs from 'rollup-plugin-commonjs'
 
 export default {
   entry: 'lib/index.js',
-  dest: 'dist/bundle.js',
+  dest: 'dist/validator.js',
   format: 'cjs',
   moduleName: 'Validator',
   plugins: [
