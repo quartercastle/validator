@@ -5,6 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/specla/validator/badge.svg?branch=master)](https://coveralls.io/github/specla/validator?branch=master)
 [![Dependency Status](https://david-dm.org/specla/validator.svg)](https://david-dm.org/specla/validator)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![gzip size](http://img.badgesize.io/https://unpkg.com/@specla/validator/dist/validator.min.js?compression=gzip)](https://unpkg.com/@specla/validator/dist/validator.min.js)
 
 A `3 kb` gzip'ed schema validator, built for developers, with extensibility and performance in mind.
 The validator is both compatible with Node.js and Browser environments out of
