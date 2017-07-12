@@ -1,6 +1,6 @@
 {
   "name": "@specla/validator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/Specla/Validator#readme",
   "description": "Super fast, 3 kb Schema validator for Node.js and the Browsers",
   "main": "./dist/validator.js",
