@@ -138,14 +138,14 @@ describe('Validator', () => {
   it('.fails() should throw an exception if the schema is async', () => {
     const validator = new Validator('test', async value => {})
     expect(() => validator.fails()).throw(
-      'The validator is asynchronous use .then() and .catch()'
+      'The validator is asynchronous, use .then() and .catch()'
     )
   })
 
   it('.errors should throw an exception if the schema is async', () => {
     const validator = new Validator('test', async value => {})
     expect(() => validator.errors).throw(
-      'The validator is asynchronous use validator.catch() to retrieve errors'
+      'The validator is asynchronous, use validator.catch() to retrieve errors'
     )
   })
 
