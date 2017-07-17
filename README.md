@@ -15,10 +15,11 @@ with Node.js and Browser environments out of the box.
 import Validator, { string, number } from '@specla/validator'
 
 const schema = {
-  name: string(),
+  name: String,
   email: async value => await db.collection('users').count({ email: value }), // will validate the email doesn't already exist in DB
+  age: value => value > 16,
   skills: [{
-    type: string(),
+    type: string({ max: 255 }),
     experience: number({ min: 0, max: 10 })
   }],
   createdAt: Date
@@ -27,6 +28,7 @@ const schema = {
 const data = {
   name: 'John Doe',
   email: 'test@example.com',
+  age: 23,
   skills: [{
     type: 'Validation',
     experience: 10
