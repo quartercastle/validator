@@ -135,66 +135,61 @@ describe('Validator', () => {
     })
   })
 
-  /**
-   * Async functions only runs from v7 and up
-   */
-  if (process.version != 'v6') { // eslint-disable-line
-    it('.fails() should throw an exception if the schema is async', () => {
-      const validator = new Validator('test', async value => {})
-      expect(() => validator.fails()).throw(
-        'The validator is asynchronous use .then() and .catch()'
-      )
-    })
+  it('.fails() should throw an exception if the schema is async', () => {
+    const validator = new Validator('test', async value => {})
+    expect(() => validator.fails()).throw(
+      'The validator is asynchronous use .then() and .catch()'
+    )
+  })
 
-    it('.errors should throw an exception if the schema is async', () => {
-      const validator = new Validator('test', async value => {})
-      expect(() => validator.errors).throw(
-        'The validator is asynchronous use validator.catch() to retrieve errors'
-      )
-    })
+  it('.errors should throw an exception if the schema is async', () => {
+    const validator = new Validator('test', async value => {})
+    expect(() => validator.errors).throw(
+      'The validator is asynchronous use validator.catch() to retrieve errors'
+    )
+  })
 
-    it('Should wait for async validation types', function (done) {
-      this.slow(1000)
-      const data = { key: 'testing' }
-      const schema = {
-        key: async value => {
-          await sleep(100)
+  it('Should wait for async validation types', function (done) {
+    this.slow(1000)
+    const data = { key: 'testing' }
+    const schema = {
+      key: async value => {
+        await sleep(100)
 
-          if (typeof value !== 'string') {
-            throw new Error('should be a string')
-          }
-
-          return true
+        if (typeof value !== 'string') {
+          throw new Error('should be a string')
         }
+
+        return true
       }
+    }
 
-      const validator = new Validator(data, schema)
-      validator.then(value => {
-        expect(value).to.be.deep.equal(data)
-        done()
-      })
+    const validator = new Validator(data, schema)
+    validator.then(value => {
+      expect(value).to.be.deep.equal(data)
+      done()
     })
+  })
 
-    it('Should catch errors an send them to the catch function', function (done) {
-      this.slow(1000)
-      const data = { key: 235 }
-      const schema = {
-        key: async value => {
-          await sleep(100)
+  it('Should catch errors an send them to the catch function', function (done) {
+    this.slow(1000)
+    const data = { key: 235 }
+    const schema = {
+      key: async value => {
+        await sleep(100)
 
-          if (typeof value !== 'string') {
-            throw new Error('should be a string')
-          }
-
-          return true
+        if (typeof value !== 'string') {
+          throw new Error('should be a string')
         }
-      }
 
-      const validator = new Validator(data, schema)
-      validator.catch(error => {
-        expect(error).to.be.deep.equal({ key: 'should be a string' })
-        done()
-      })
+        return true
+      }
+    }
+
+    const validator = new Validator(data, schema)
+    validator.catch(error => {
+      expect(error).to.be.deep.equal({ key: 'should be a string' })
+      done()
     })
-  }
+  })
 })
