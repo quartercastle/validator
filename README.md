@@ -62,6 +62,7 @@ validator.catch(errors => {
   - [Custom types](#custom-types)
     - [Avanced types](#avanced-types)
     - [Mutate value from within type](#mutate-value-from-within-type)
+    - [Asynchronous types](#asynchronous-types)
   - [Validator](#validator)
 
 
@@ -341,6 +342,22 @@ function string({ defaultValue }) {
   return value => {
     if (defaultValue && (value === undefined || value === null)) {
       throw new Value(defaultValue)
+    }
+
+    return true
+  }
+}
+```
+
+### Asynchronous types
+Specla validator supports asynchronous validator functions like below.
+This enables you to query a database for a validation result or maybe validate a
+hash or something else that is running asynchronously.
+```js
+function uniqueEmail() {
+  return async value => {
+    if (await db.collection('users').count({ email: value })) {
+      throw new Error('There is already a user registered with this email.')
     }
 
     return true
