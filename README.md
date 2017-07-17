@@ -7,7 +7,7 @@
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![gzip size](http://img.badgesize.io/https://unpkg.com/@specla/validator/dist/validator.min.js?compression=gzip)](https://unpkg.com/@specla/validator/dist/validator.min.js)
 
-A `3 kb` gzipped schema validator, built for developers, with extensibility and performance in mind.
+A `4 kb` gzipped schema validator, built for developers, with extensibility and performance in mind.
 It handles both synchronous and asynchronous validation and it is compatible
 with Node.js and Browser environments out of the box.
 
