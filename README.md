@@ -7,18 +7,19 @@
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![gzip size](http://img.badgesize.io/https://unpkg.com/@specla/validator/dist/validator.min.js?compression=gzip)](https://unpkg.com/@specla/validator/dist/validator.min.js)
 
-A `3 kb` gzip'ed schema validator, built for developers, with extensibility and performance in mind.
-The validator is both compatible with Node.js and Browser environments out of
-the box.
+A `4 kb` gzipped schema validator, built for developers, with extensibility and performance in mind.
+It handles both synchronous and asynchronous validation and it is compatible
+with Node.js and Browser environments out of the box.
 
 ```js
 import Validator, { string, number } from '@specla/validator'
 
 const schema = {
-  name: string(),
+  name: String,
+  email: async value => await isEmailUniqueInDB(value), // just an example
   age: value => value > 16,
   skills: [{
-    type: string(),
+    type: string({ max: 255 }),
     experience: number({ min: 0, max: 10 })
   }],
   createdAt: Date
@@ -26,6 +27,7 @@ const schema = {
 
 const data = {
   name: 'John Doe',
+  email: 'test@example.com',
   age: 23,
   skills: [{
     type: 'Validation',
@@ -36,7 +38,13 @@ const data = {
 
 const validator = new Validator(data, schema)
 
-console.log(validator.fails(), validator.errors)
+validator.then(value => {
+  // Everything looks good
+})
+
+validator.catch(errors => {
+  // Do something if errors where encountered during the validation process
+})
 ```
 ## Content
   - [Install](#install)
@@ -56,6 +64,7 @@ console.log(validator.fails(), validator.errors)
   - [Custom types](#custom-types)
     - [Avanced types](#avanced-types)
     - [Mutate value from within type](#mutate-value-from-within-type)
+    - [Asynchronous types](#asynchronous-types)
   - [Validator](#validator)
 
 
@@ -90,7 +99,7 @@ const transformedSchema = {
   string: string()
 }
 ```
-The Validator ships with some validator functions you can use to easier define
+The Validator ships with some types you can use to easier define
 your schema and your constraints.
 ```js
 // import types from @specla/validator
@@ -101,8 +110,8 @@ const schema = {
   number: number({ min: 0, max: 100, precision: 2 })
 }
 ```
-All types shipped with this modules is required by default, so if you have a
-target in the schema which should be optional, you just have to specify it.
+All types shipped with this module requires a value by default. If you have a
+target in the schema which should be optional, you just have to specify it like below.
 ```js
 // will accept strings, null and undefined.
 string({ optional: true })
@@ -274,7 +283,7 @@ const schema = {
 Specla Validator is made to be flexible and extensible. All types are just
 pure functions. Therefore its easy to create your own types or use other
 libraries methods as validators.
-If the valdator should be notified about an error, the type should just
+If the validator should be notified about an error, the type should just
 throw one, the validator will catch it.
 ```js
 // A simple implementation of a string validator
@@ -342,21 +351,43 @@ function string({ defaultValue }) {
 }
 ```
 
+### Asynchronous types
+Specla validator supports asynchronous validator functions like below.
+This enables you to query a database for a validation result or maybe validate a
+hash or something else that is running asynchronously.
+```js
+function uniqueEmail() {
+  return async value => {
+    if (await db.collection('users').count({ email: value })) {
+      throw new Error('There is already a user registered with this email.')
+    }
+
+    return true
+  }
+}
+```
+
 ## Validator
 Compare the data against the schema by invokating the the validator with the data
 as the first argument and the schema as the second.
 ```js
 const validator = new Validator(data, schema)
 ```
-The Validator constructor returns a new Validator object, which will collect all
-errors encounted during the validation process. You can check if any errors was
-registered with the `fails` method.
+The Validator constructor returns a Validator promise, which will collect all
+errors encountered during the validation process. To verify the validation you
+can simply use the `.then()` and `.catch()` methods from the promise object.
 ```js
-validator.fails() // returns a boolean, is true if any errors was encountered otherwise false
-validator.errors // will contain an object with all errors encountered during validation
+validator.then(value => { /* is run on success! */ })
+validator.catch(errors => { /* is run if errors where encountered */ })
 ```
-If you want to catch the error as it happens, you can stream errors by configuring
-the Validator like below.
+If your schema is purely synchronous you are able to use the two properties
+below, but its recommended just to use the promise methods instead.
+```js
+validator.fails()
+validator.errors
+```
+If you want to catch the error as they happens, you can stream errors by
+configuring the Validator like below.
 ```js
 new Validator(data, schema, {
   onError: error => {

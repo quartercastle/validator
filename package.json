@@ -2,7 +2,7 @@
   "name": "@specla/validator",
   "version": "1.1.0",
   "homepage": "https://github.com/Specla/Validator#readme",
-  "description": "Super fast, 3 kb Schema validator for Node.js and the Browsers",
+  "description": "Fast 4 kb Schema validator for Node.js and the Browsers",
   "main": "./dist/validator.js",
   "module": "./dist/validator.js",
   "scripts": {
@@ -45,6 +45,7 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^7.2.*",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
     "chai": "^3.5.*",
     "coveralls": "^2.13.1",
