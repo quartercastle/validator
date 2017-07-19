@@ -379,11 +379,12 @@ can simply use the `.then()` and `.catch()` methods from the promise object.
 ```js
 validator.then(value => { /* is run on success! */ })
 validator.catch(errors => { /* is run if errors where encountered */ })
-
-// if your schema is purely synchronous you are able to use the two functions
-// below, but its recommended just to use the promise methods.
-validator.fails() // returns a boolean, is true if any errors was encountered otherwise false
-validator.errors // will contain an object with all errors encountered during validation
+```
+If your schema is purely synchronous you are able to use the two properties
+below, but its recommended just to use the promise methods.
+```js
+validator.fails()
+validator.errors
 ```
 If you want to catch the error as they happens, you can stream errors by
 configuring the Validator like below.
