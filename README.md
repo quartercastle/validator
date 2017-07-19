@@ -381,7 +381,7 @@ validator.then(value => { /* is run on success! */ })
 validator.catch(errors => { /* is run if errors where encountered */ })
 ```
 If your schema is purely synchronous you are able to use the two properties
-below, but its recommended just to use the promise methods.
+below, but its recommended just to use the promise methods instead.
 ```js
 validator.fails()
 validator.errors
