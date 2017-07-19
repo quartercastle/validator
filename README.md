@@ -373,7 +373,7 @@ as the first argument and the schema as the second.
 ```js
 const validator = new Validator(data, schema)
 ```
-The Validator constructor returns an enhanced Promise, which will collect all
+The Validator constructor returns a Validator promise, which will collect all
 errors encountered during the validation process. To verify the validation you
 can simply use the `.then()` and `.catch()` methods from the promise object.
 ```js
