@@ -43,7 +43,7 @@ validator.then(value => {
 })
 
 validator.catch(errors => {
-  // Do something if errors are encountered during the validation process
+  // Do something if errors where encountered during the validation process
 })
 ```
 ## Content
