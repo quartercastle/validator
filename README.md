@@ -16,7 +16,7 @@ import Validator, { string, number } from '@specla/validator'
 
 const schema = {
   name: String,
-  email: async value => await db.collection('users').count({ email: value }), // will validate the email doesn't already exist in DB
+  email: async value => await isEmailUniqueInDB(value), // just an example
   age: value => value > 16,
   skills: [{
     type: string({ max: 255 }),
@@ -99,7 +99,7 @@ const transformedSchema = {
   string: string()
 }
 ```
-The Validator ships with some validator functions you can use to easier define
+The Validator ships with some types you can use to easier define
 your schema and your constraints.
 ```js
 // import types from @specla/validator
@@ -110,8 +110,8 @@ const schema = {
   number: number({ min: 0, max: 100, precision: 2 })
 }
 ```
-All types shipped with this modules is required by default, so if you have a
-target in the schema which should be optional, you just have to specify it.
+All types shipped with this module requires a value by default. If you have a
+target in the schema which should be optional, you just have to specify it like below.
 ```js
 // will accept strings, null and undefined.
 string({ optional: true })
