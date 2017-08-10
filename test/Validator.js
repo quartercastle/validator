@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
 const Validator = require('../lib')
-const { string, object } = require('../lib')
+const { string, object, number } = require('../lib')
 const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
 describe('Validator', () => {
@@ -191,5 +191,18 @@ describe('Validator', () => {
       expect(error).to.be.deep.equal({ key: 'should be a string' })
       done()
     })
+  })
+
+  it('Should not catch the Value or Schema exception in the validation promise', done => {
+    const data = { number: '5235' }
+    const schema = { number: number({ cast: true }) }
+    const validator = new Validator(data, schema)
+    expect(data).to.be.deep.equal({ number: 5235 })
+
+    validator
+      .then(data => {
+        expect(data).to.be.deep.equal({ number: 5235 })
+        done()
+      })
   })
 })
