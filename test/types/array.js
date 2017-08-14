@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
 const { array } = require('../../lib/types')
-const Schema = require('../../lib/exceptions/Schema')
 const types = require('../utils/types')
 
 describe('Type: array', () => {
@@ -38,7 +37,6 @@ describe('Type: array', () => {
   it('Should accept a schema as second argument', () => {
     const schema = [{ field: 'rule' }]
     const validator = array([], schema)
-    expect(() => validator([])).to.throw(Schema)
 
     try {
       validator([])
