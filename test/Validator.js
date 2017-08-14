@@ -171,7 +171,7 @@ describe('Validator', () => {
     })
   })
 
-  it('Should catch errors an send them to the catch function', function (done) {
+  it('Should catch errors and send them to the promise reject function', function (done) {
     this.slow(1000)
     const data = { key: 235 }
     const schema = {
@@ -193,9 +193,22 @@ describe('Validator', () => {
     })
   })
 
-  it('Should not catch the Value or Schema exception in the validation promise', done => {
+  it('Should not catch the Value exception as an promise rejection', done => {
     const data = { number: '5235' }
     const schema = { number: number({ cast: true }) }
+    const validator = new Validator(data, schema)
+    expect(data).to.be.deep.equal({ number: 5235 })
+
+    validator
+      .then(data => {
+        expect(data).to.be.deep.equal({ number: 5235 })
+        done()
+      })
+  })
+
+  it('Should not catch the Schema exception as an promise rejection', done => {
+    const data = { number: 5235 }
+    const schema = object({}, { number: Number })
     const validator = new Validator(data, schema)
     expect(data).to.be.deep.equal({ number: 5235 })
 
