@@ -75,16 +75,19 @@ npm install --save @specla/validator
 ```
 
 ## Schema definition
-A schema is an array or object where the key is the target to validated
-and the value of the schema are a validator function that knows how the value
-of the target should be validated.
+A schema is an array or object where the `key` has a corresponding validator
+function. The validator function is invocated when you compare the schema against
+your data. If you want to marke the value as invalid all you have to do is to
+throw an error or return false within the validator function.
 ```js
+// Object schema
 const schema = {
-  target: function validator (value) {
-    // do something to validate the targets value
+  key: function validator (value) {
+    // Validate the value to the key
   }
 }
 
+// Array schema
 const arraySchema = [function validator (value) {}]
 ```
 Specla Validator supports js standard types. This is possible because the Validator transforms
