@@ -218,4 +218,26 @@ describe('Validator', () => {
         done()
       })
   })
+
+  it('Should handle promise rejections together with sync errors', done => {
+    const data = {
+      number: 'invalid number',
+      asyncType: 'invalid async type'
+    }
+
+    const schema = {
+      number: Number,
+      asyncType: async value => Promise.resolve('test')
+    }
+
+    const validator = new Validator(data, schema)
+
+    validator
+      .catch(err => {
+        expect(err).to.be.deep.equal({
+          number: 'should be a number'
+        })
+        done()
+      })
+  })
 })
