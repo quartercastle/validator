@@ -36,15 +36,11 @@ const data = {
   createdAt: new Date()
 }
 
-const validator = new Validator(data, schema)
-
-validator.then(value => {
-  // Everything looks good
-})
-
-validator.catch(errors => {
-  // Do something if errors where encountered during the validation process
-})
+try {
+  await new Validator(data, schema)
+} catch (err) {
+  console.log(err)
+}
 ```
 ## Content
   - [Install](#install)
