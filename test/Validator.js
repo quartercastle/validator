@@ -5,121 +5,168 @@ const { string, object, number } = require('../lib')
 const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
 describe('Validator', () => {
-  it('Should validate a value against a type', () => {
+  it('Should validate a value against a type', done => {
     const validator = new Validator('string', String)
-    expect(validator.errors).to.be.deep.equal({})
-  })
-
-  it('Should evaluate an empty object as the type object', () => {
-    let validator = new Validator({ object: {} }, { object: {} })
-    expect(validator.errors).to.be.deep.equal({})
-    validator = new Validator({ object: 'notObject' }, { object: {} })
-    expect(validator.errors).to.be.deep.equal({
-      object: 'should be an object'
+    validator.then(() => {
+      expect(validator._errors).to.be.deep.equal({})
+      done()
     })
   })
 
-  it('Should evaluate an empty array as the type array', () => {
-    let validator = new Validator({ array: [] }, { array: [] })
-    expect(validator.errors).to.be.deep.equal({})
-    validator = new Validator({ array: 'notArray' }, { array: [] })
-    expect(validator.errors).to.be.deep.equal({
-      array: `should be an array`
-    })
+  it('Should evaluate an empty object as the type object', done => {
+    const validator1 = new Validator({ object: {} }, { object: {} })
+    const validator2 = new Validator({ object: 'notObject' }, { object: {} })
+    const error = { object: 'should be an object' }
+
+    Promise
+      .all([validator1, validator2])
+      .catch(e => {
+        expect(validator1._errors).to.be.deep.equal({})
+        expect(validator2._errors).to.be.deep.equal(error)
+        expect(e).to.be.deep.equal(error)
+        done()
+      })
   })
 
-  it('Should validate a value against a schema object', () => {
+  it('Should evaluate an empty array as the type array', done => {
+    const validator1 = new Validator({ array: [] }, { array: [] })
+    const validator2 = new Validator({ array: 'notArray' }, { array: [] })
+    const error = { array: `should be an array` }
+
+    Promise
+      .all([validator1, validator2])
+      .catch(e => {
+        expect(validator1._errors).to.be.deep.equal({})
+        expect(validator2._errors).to.be.deep.equal(error)
+        expect(e).to.be.deep.equal(error)
+        done()
+      })
+  })
+
+  it('Should validate a value against a schema object', done => {
     const value = { string: 'string', number: 20 }
     const schema = { string: String, number: Number }
     const validator = new Validator(value, schema)
-    expect(validator.errors).to.be.deep.equal({})
+    validator.then(() => {
+      expect(validator._errors).to.be.deep.equal({})
+      done()
+    })
   })
 
-  it('Should validate a value against a schema array', () => {
+  it('Should validate a value against a schema array', done => {
     const value = [{ string: 'string', number: 20 }]
     const schema = [{ string: String, number: Number }]
     const validator = new Validator(value, schema)
-    expect(validator.errors).to.be.deep.equal({})
+    validator.then(() => {
+      expect(validator._errors).to.be.deep.equal({})
+      done()
+    })
   })
 
-  it(`Should tell object is required when undefined or null is given as the value`, () => {
+  it(`Should tell object is required when undefined or null is given as the value`, done => {
     const schema = { string: String }
     const error = { '': `should be an object` }
-    let validator = new Validator(undefined, schema)
-    expect(validator.errors).to.be.deep.equal(error)
-    validator = new Validator(null, schema)
-    expect(validator.errors).to.be.deep.equal(error)
+    const validator1 = new Validator(undefined, schema)
+    const validator2 = new Validator(null, schema)
+
+    Promise
+      .all([validator1, validator2])
+      .catch(e => {
+        expect(validator1._errors).to.be.deep.equal(error)
+        expect(validator2._errors).to.be.deep.equal(error)
+        expect(e).to.be.deep.equal(error)
+        done()
+      })
   })
 
-  it(`Should tell array is required when undefined or null is given as the value`, () => {
+  it(`Should tell array is required when undefined or null is given as the value`, done => {
     const schema = [{ string: String }]
     const error = { '': `should be an array` }
-    let validator = new Validator(undefined, schema)
-    expect(validator.errors).to.be.deep.equal(error)
-    validator = new Validator(null, schema)
-    expect(validator.errors).to.be.deep.equal(error)
+    const validator1 = new Validator(undefined, schema)
+    const validator2 = new Validator(null, schema)
+
+    Promise
+      .all([validator1, validator2])
+      .catch(e => {
+        expect(validator1._errors).to.be.deep.equal(error)
+        expect(validator2._errors).to.be.deep.equal(error)
+        expect(e).to.be.deep.equal(error)
+        done()
+      })
   })
 
-  it(`Should tell if a key isn't defined in the schema`, () => {
-    let validator = new Validator({ string: 'string' }, {})
-    expect(validator.errors).to.be.deep.equal({
-      string: `key is not defined in the schema`
-    })
+  it(`Should tell if a key isn't defined in the schema`, done => {
+    const validator1 = new Validator({ string: 'string' }, {})
+    const validator2 = new Validator([{ string: 'string' }], [{}])
 
-    validator = new Validator([{ string: 'string' }], [{}])
-    expect(validator.errors).to.be.deep.equal({
-      '0.string': `key is not defined in the schema`
-    })
+    Promise
+      .all([validator1, validator2])
+      .catch(() => {
+        expect(validator1._errors).to.be.deep.equal({
+          string: `key is not defined in the schema`
+        })
+        expect(validator2._errors).to.be.deep.equal({
+          '0.string': `key is not defined in the schema`
+        })
+        done()
+      })
   })
 
-  it('Should set a default value if the input is undefined or null', () => {
+  it('Should set a default value if the input is undefined or null', done => {
     const value = { string: undefined }
-    const validator = new Validator( // eslint-disable-line
-      value,
-      { string: string({ defaultValue: 'string' }) }
-    )
+    const schema = { string: string({ defaultValue: 'string' }) }
+    const validator = new Validator(value, schema)
 
-    expect(value.string).to.be.equal('string')
-  })
-
-  it('Should mutate data through a mutator function', () => {
-    const value = { nested: { string: 'string' } }
-    const validator = new Validator( // eslint-disable-line
-      value,
-      {
-        nested: {
-          string: string({ mutator: value => 'new string' })
-        }
-      }
-    )
-
-    expect(value.nested.string).to.be.equal('new string')
-  })
-
-  it('Should set error if validator function returns false', () => {
-    const validator = new Validator('string', value => value !== 'string')
-    expect(validator.errors).to.be.deep.equal({
-      '': 'value is invalid'
+    validator.then(v => {
+      expect(value.string).to.be.equal('string')
+      expect(v.string).to.be.equal('string')
+      done()
     })
   })
 
-  it('Should validate a value against a new schema if a new Schema is thrown', () => {
+  it('Should mutate data through a mutator function', done => {
+    const value = { nested: { string: 'string' } }
+    const schema = {
+      nested: {
+        string: string({ mutator: value => 'new string' })
+      }
+    }
+    const validator = new Validator(value, schema)
+
+    validator.then(v => {
+      expect(value.nested.string).to.be.equal('new string')
+      expect(v.nested.string).to.be.equal('new string')
+      done()
+    })
+  })
+
+  it('Should set error if validator function returns false', done => {
+    const validator = new Validator('string', value => value !== 'string')
+    const error = { '': 'value is invalid' }
+
+    validator.catch(e => {
+      expect(validator._errors).to.be.deep.equal(error)
+      expect(e).to.be.deep.equal(error)
+      done()
+    })
+  })
+
+  it('Should validate a value against a new schema if a new Schema is thrown', done => {
     const value = { string: 'string' }
     const schema = object({}, { string: String })
     const validator = new Validator(value, schema)
-    expect(validator.errors).to.be.deep.equal({})
+
+    validator.then(v => {
+      expect(validator._errors).to.be.deep.equal({})
+      expect(v).to.be.deep.equal(value)
+      done()
+    })
   })
 
-  it('.fails() should return true if any errors where encountered', () => {
-    let validator = new Validator(1, String)
-    expect(validator.fails()).to.be.equal(true)
-    validator = new Validator('string', String)
-    expect(validator.fails()).to.be.equal(false)
-  })
-
-  it('Should be able to listen for errors as an option on the validator', () => {
+  it('Should be able to listen for errors as an option on the validator', done => {
     const value = { number: '10' }
     const schema = { number: Number }
+    const error = { number: `should be a number` }
     const validator = new Validator(value, schema, {
       onError: err => {
         expect(err).to.be.deep.equal({
@@ -130,23 +177,11 @@ describe('Validator', () => {
       }
     })
 
-    expect(validator.errors).to.be.deep.equal({
-      number: `should be a number`
+    validator.catch(e => {
+      expect(validator._errors).to.be.deep.equal(error)
+      expect(e).to.be.deep.equal(error)
+      done()
     })
-  })
-
-  it('.fails() should throw an exception if the schema is async', () => {
-    const validator = new Validator('test', async value => {})
-    expect(() => validator.fails()).throw(
-      'The validator is asynchronous, use .then() and .catch()'
-    )
-  })
-
-  it('.errors should throw an exception if the schema is async', () => {
-    const validator = new Validator('test', async value => {})
-    expect(() => validator.errors).throw(
-      'The validator is asynchronous, use validator.catch() to retrieve errors'
-    )
   })
 
   it('Should wait for async validation types', function (done) {
@@ -224,7 +259,6 @@ describe('Validator', () => {
       number: 'invalid number',
       asyncType: 'invalid async type'
     }
-
     const schema = {
       number: Number,
       asyncType: async value => Promise.resolve('test')
