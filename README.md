@@ -374,16 +374,18 @@ const validator = new Validator(data, schema)
 ```
 The Validator constructor returns a Validator promise, which will collect all
 errors encountered during the validation process. To verify the validation you
-can simply use the `.then()` and `.catch()` methods from the promise object.
+can simply use the `.then()` and `.catch()` methods from the promise object or
+even better use  the new es6 `async/await` api.
 ```js
 validator.then(value => { /* is run on success! */ })
 validator.catch(errors => { /* is run if errors where encountered */ })
-```
-If your schema is purely synchronous you are able to use the two properties
-below, but its recommended just to use the promise methods instead.
-```js
-validator.fails()
-validator.errors
+
+// es6 async/await
+try {
+  await new Validator(data, schema)
+} catch (errors) {
+  // do something with the ecountered errors
+}
 ```
 If you want to catch the error as they happens, you can stream errors by
 configuring the Validator like below.
